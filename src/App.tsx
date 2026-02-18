@@ -6,6 +6,12 @@ import { useState } from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const getAssetPath = (path: string) => {
+  const base = import.meta.env.BASE_URL || '/';
+  const cleanPath = path.startsWith('/') ? path.substring(1) : path;
+  return `${base}${cleanPath}`;
+};
+
 function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -160,7 +166,7 @@ function App() {
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'bg-white/90 backdrop-blur-lg shadow-lg py-3' : 'bg-transparent py-6'}`}>
         <div className="w-full px-6 lg:px-12 flex items-center justify-between">
           <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center group">
-            <img src="./veralya-logo-new.png" alt="Veralya" className="h-14 md:h-16 w-auto group-hover:scale-105 transition-transform duration-300" />
+            <img src={getAssetPath("veralya-logo-new.png")} alt="Veralya" className="h-14 md:h-16 w-auto group-hover:scale-105 transition-transform duration-300" />
           </button>
 
           <div className="hidden lg:flex items-center gap-8">
@@ -255,7 +261,7 @@ function App() {
               <div className="order-1 lg:order-2 relative">
                 <div ref={imageRef} className="relative">
                   <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-                    <img src="./hero-image.jpg" alt="Equipo colaborando" className="w-full h-auto object-cover" />
+                    <img src={getAssetPath("hero-image.jpg")} alt="Equipo colaborando" className="w-full h-auto object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-t from-veralya-dark/20 to-transparent" />
                   </div>
                   <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-5 shadow-xl floating">
@@ -496,7 +502,7 @@ function App() {
                   {
                     name: 'Mónica Arroyo Romero',
                     role: 'Cofundadora & Consultora Senior',
-                    image: '/team-monica.png',
+                    image: getAssetPath('team-monica.png'),
                     imageClass: 'object-top scale-100',
                     desc: 'Psicóloga y experta en recursos humanos con más de diez años de experiencia en desarrollo del talento y liderazgo en organizaciones internacionales.',
                     specialties: ['Análisis conductual y motivacional (DISC)', 'Fuerzas Impulsoras 3 TTI Success Insights', 'Desarrollo de liderazgo', 'Comunicación efectiva'],
@@ -505,7 +511,7 @@ function App() {
                   {
                     name: 'Raquel Arroyo Romero',
                     role: 'Cofundadora & Estratega de Desarrollo',
-                    image: '/team-raquel.png',
+                    image: getAssetPath('team-raquel.png'),
                     imageClass: 'object-[center_15%] scale-[1.45] origin-top',
                     desc: 'Experta en desarrollo humano y estrategia para pymes y emprendedores. Máster en Desarrollo Humano y Practitioner en PNL.',
                     specialties: ['Estrategia para pymes y emprendedores', 'Programación Neurolingüística (PNL)', 'DISC y Fuerzas Impulsoras TTI', 'Mentalidad y comportamiento organizacional'],
@@ -588,7 +594,7 @@ function App() {
                     </div>
                     <p className="font-body text-gray-700 leading-relaxed mb-6 text-sm">"{t.quote.substring(0, 180)}..."</p>
                     <div className="flex items-center gap-4 pt-4 border-t border-gray-100">
-                      <img src={`/testimonial-${index + 1}.jpg`} alt={t.name} className="w-12 h-12 rounded-full object-cover" />
+                      <img src={getAssetPath(`testimonial-${index + 1}.jpg`)} alt={t.name} className="w-12 h-12 rounded-full object-cover" />
                       <div>
                         <h4 className="font-display font-semibold text-veralya-dark">{t.name}</h4>
                         <p className="font-body text-xs text-gray-500">{t.role}</p>
@@ -642,7 +648,7 @@ function App() {
           <div className="grid lg:grid-cols-5 gap-12 lg:gap-8 max-w-7xl mx-auto">
             <div className="lg:col-span-2">
               <div className="mb-6">
-                <img src="./veralya-logo-footer.png" alt="Veralya" className="h-16 w-auto object-contain" />
+                <img src={getAssetPath("veralya-logo-footer.png")} alt="Veralya" className="h-16 w-auto object-contain" />
               </div>
               <p className="font-body text-white/70 mb-6 max-w-sm">
                 Transformamos equipos mediante evaluación DISC, desarrollo de liderazgo
