@@ -160,7 +160,7 @@ function App() {
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'bg-white/90 backdrop-blur-lg shadow-lg py-3' : 'bg-transparent py-6'}`}>
         <div className="w-full px-6 lg:px-12 flex items-center justify-between">
           <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center group">
-            <img src="/veralya-logo-new.png" alt="Veralya" className="h-14 md:h-16 w-auto group-hover:scale-105 transition-transform duration-300" />
+            <img src="./veralya-logo-new.png" alt="Veralya" className="h-14 md:h-16 w-auto group-hover:scale-105 transition-transform duration-300" />
           </button>
 
           <div className="hidden lg:flex items-center gap-8">
@@ -255,7 +255,7 @@ function App() {
               <div className="order-1 lg:order-2 relative">
                 <div ref={imageRef} className="relative">
                   <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-                    <img src="/hero-image.jpg" alt="Equipo colaborando" className="w-full h-auto object-cover" />
+                    <img src="./hero-image.jpg" alt="Equipo colaborando" className="w-full h-auto object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-t from-veralya-dark/20 to-transparent" />
                   </div>
                   <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-5 shadow-xl floating">
@@ -642,7 +642,7 @@ function App() {
           <div className="grid lg:grid-cols-5 gap-12 lg:gap-8 max-w-7xl mx-auto">
             <div className="lg:col-span-2">
               <div className="mb-6">
-                <img src="/veralya-logo-footer.png" alt="Veralya" className="h-16 w-auto object-contain" />
+                <img src="./veralya-logo-footer.png" alt="Veralya" className="h-16 w-auto object-contain" />
               </div>
               <p className="font-body text-white/70 mb-6 max-w-sm">
                 Transformamos equipos mediante evaluación DISC, desarrollo de liderazgo

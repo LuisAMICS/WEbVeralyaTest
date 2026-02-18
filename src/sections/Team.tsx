@@ -12,7 +12,7 @@ const Team = () => {
     {
       name: 'Mónica Arroyo Romero',
       role: 'Cofundadora & Consultora Senior',
-      image: '/team-monica.png',
+      image: './team-monica.png',
       imageClass: 'object-top scale-100',
       description:
         'Psicóloga y experta en recursos humanos con más de diez años de experiencia en desarrollo del talento y liderazgo en organizaciones internacionales.',
@@ -31,7 +31,7 @@ const Team = () => {
     {
       name: 'Raquel Arroyo Romero',
       role: 'Cofundadora & Estratega de Desarrollo',
-      image: '/team-raquel.png',
+      image: './team-raquel.png',
       imageClass: 'object-[center_15%] scale-[1.45] origin-top',
       description:
         'Experta en desarrollo humano y estrategia para pymes y emprendedores. Máster en Desarrollo Humano y Practitioner en PNL.',

@@ -209,7 +209,7 @@ const Home = () => {
               >
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                   <img
-                    src="/hero-image.jpg"
+                    src="./hero-image.jpg"
                     alt="Equipo colaborando"
                     className="w-full h-auto object-cover"
                   />
@@ -357,7 +357,7 @@ const Home = () => {
             <div className="reveal-section relative">
               <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                 <img
-                  src="/about-image.jpg"
+                  src="./about-image.jpg"
                   alt="Equipo Veralya"
                   className="w-full h-auto object-cover"
                 />

@@ -194,7 +194,7 @@ const Soluciones = () => {
               <div className="reveal-element relative">
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                   <img
-                    src="/about-image.jpg"
+                    src="./about-image.jpg"
                     alt="Consultoría estratégica"
                     className="w-full h-auto object-cover"
                   />

@@ -240,7 +240,7 @@ const Hero = () => {
               {/* Main image */}
               <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                 <img
-                  src="/hero-image.jpg"
+                  src="./hero-image.jpg"
                   alt="Equipo colaborando"
                   className="w-full h-auto object-cover"
                 />
