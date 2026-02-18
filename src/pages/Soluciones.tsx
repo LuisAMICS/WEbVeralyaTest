@@ -6,6 +6,12 @@ import { ArrowRight, CheckCircle, UserCircle, Users, Search, GraduationCap, Chev
 
 gsap.registerPlugin(ScrollTrigger);
 
+const getAssetPath = (path: string) => {
+  const base = import.meta.env.BASE_URL || '/';
+  const cleanPath = path.startsWith('/') ? path.substring(1) : path;
+  return `${base}${cleanPath}`;
+};
+
 const Soluciones = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [activeService, setActiveService] = useState<number | null>(0);
@@ -16,7 +22,7 @@ const Soluciones = () => {
       subtitle: 'Lidera desde la calma, actúa con foco',
       description: 'Para emprendedores, ejecutivos y líderes que buscan avanzar con claridad y gestionar sus emociones en entornos exigentes.',
       icon: <UserCircle className="w-8 h-8" />,
-      image: '/service-coaching.jpg',
+      image: getAssetPath('service-coaching.jpg'),
       benefits: [
         'Mayor consciencia del impacto como líder',
         'Gestión emocional en entornos exigentes',
@@ -35,7 +41,7 @@ const Soluciones = () => {
       subtitle: 'Talento que encaja, aporta y se queda',
       description: 'Proceso de selección con mirada cultural y estratégica. No solo contratamos talento, lo alineamos con tu visión desde el primer día.',
       icon: <Search className="w-8 h-8" />,
-      image: '/service-selection.jpg',
+      image: getAssetPath('service-selection.jpg'),
       benefits: [
         'Reducción de rotación de personal',
         'Alineación cultural desde el inicio',
@@ -54,7 +60,7 @@ const Soluciones = () => {
       subtitle: 'Transforma la dinámica grupal',
       description: 'Para desbloquear dinámicas tóxicas, mejorar la confianza y reconectar con el propósito colectivo.',
       icon: <Users className="w-8 h-8" />,
-      image: '/service-teams.jpg',
+      image: getAssetPath('service-teams.jpg'),
       benefits: [
         'Mayor cohesión y colaboración',
         'Reducción de conflictos internos',
@@ -73,7 +79,7 @@ const Soluciones = () => {
       subtitle: 'Menos fricciones, más conexión',
       description: 'Experiencias dinámicas y prácticas que mejoran la comunicación, la colaboración y la motivación real.',
       icon: <GraduationCap className="w-8 h-8" />,
-      image: '/service-training.jpg',
+      image: getAssetPath('service-training.jpg'),
       benefits: [
         'Comunicación más efectiva',
         'Mejor coordinación entre equipos',
@@ -143,8 +149,8 @@ const Soluciones = () => {
               <span className="text-veralya-green">más enfocados, productivos y alineados</span>
             </h1>
             <p className="reveal-element font-body text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto mb-10">
-              En Veralya Consulting ayudamos a CEOs, directivos de RRHH y responsables comerciales 
-              a desarrollar equipos que rinden más, con menos fricciones, gracias a herramientas 
+              En Veralya Consulting ayudamos a CEOs, directivos de RRHH y responsables comerciales
+              a desarrollar equipos que rinden más, con menos fricciones, gracias a herramientas
               como DISC, coaching ejecutivo y PNL.
             </p>
             <Link
@@ -171,13 +177,13 @@ const Soluciones = () => {
                   Para activar talento y mejorar resultados
                 </h2>
                 <p className="font-body text-gray-600 mb-6 leading-relaxed">
-                  En Veralya trabajamos con líderes que ya han llegado lejos, pero quieren ir 
-                  más allá con sus equipos. Si tu organización está creciendo, cambiando o 
-                  necesitas más claridad y cohesión, te ayudamos a optimizar tu estructura, 
+                  En Veralya trabajamos con líderes que ya han llegado lejos, pero quieren ir
+                  más allá con sus equipos. Si tu organización está creciendo, cambiando o
+                  necesitas más claridad y cohesión, te ayudamos a optimizar tu estructura,
                   reducir conflictos y transformar el potencial humano en resultados medibles.
                 </p>
                 <p className="font-body text-gray-600 mb-8 leading-relaxed">
-                  La clave está en entender que no se trata de trabajar más, sino de trabajar 
+                  La clave está en entender que no se trata de trabajar más, sino de trabajar
                   mejor, con un equipo alineado a tu visión.
                 </p>
 
@@ -194,7 +200,7 @@ const Soluciones = () => {
               <div className="reveal-element relative">
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                   <img
-                    src="./about-image.jpg"
+                    src={getAssetPath("about-image.jpg")}
                     alt="Consultoría estratégica"
                     className="w-full h-auto object-cover"
                   />
@@ -222,7 +228,7 @@ const Soluciones = () => {
                 DISC + <span className="text-veralya-green">Fuerzas Impulsoras</span>
               </h2>
               <p className="reveal-element font-body text-lg text-gray-600">
-                Convierte el potencial de tu equipo en resultados reales con la combinación 
+                Convierte el potencial de tu equipo en resultados reales con la combinación
                 más poderosa para optimizar el rendimiento.
               </p>
             </div>
@@ -337,16 +343,14 @@ const Soluciones = () => {
                       </div>
                     </div>
                     <ChevronDown
-                      className={`w-6 h-6 text-veralya-green transition-transform duration-300 ${
-                        activeService === index ? 'rotate-180' : ''
-                      }`}
+                      className={`w-6 h-6 text-veralya-green transition-transform duration-300 ${activeService === index ? 'rotate-180' : ''
+                        }`}
                     />
                   </button>
 
                   <div
-                    className={`overflow-hidden transition-all duration-500 ${
-                      activeService === index ? 'max-h-[600px]' : 'max-h-0'
-                    }`}
+                    className={`overflow-hidden transition-all duration-500 ${activeService === index ? 'max-h-[600px]' : 'max-h-0'
+                      }`}
                   >
                     <div className="p-6 lg:p-8 pt-0 border-t border-gray-100">
                       <div className="grid md:grid-cols-2 gap-8">
@@ -407,7 +411,7 @@ const Soluciones = () => {
                 Resultados medibles que transforman el día a día
               </h2>
               <p className="reveal-element font-body text-lg text-white/80">
-                No se trata solo de mejorar procesos, sino de activar personas. 
+                No se trata solo de mejorar procesos, sino de activar personas.
                 Equipos alineados, motivados y enfocados son el verdadero motor del crecimiento.
               </p>
             </div>
@@ -454,7 +458,7 @@ const Soluciones = () => {
               ¿Tu equipo podría rendir más con el enfoque adecuado?
             </h2>
             <p className="font-body text-xl text-white/80 mb-10 max-w-2xl mx-auto">
-              Solicita una sesión exploratoria con Veralya y descubre cómo mejorar 
+              Solicita una sesión exploratoria con Veralya y descubre cómo mejorar
               el rendimiento de tus equipos y alinear talento con objetivos de negocio.
             </p>
 

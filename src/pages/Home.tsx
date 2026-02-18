@@ -6,6 +6,12 @@ import { ArrowRight, Sparkles, Quote, Star, CheckCircle } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const getAssetPath = (path: string) => {
+  const base = import.meta.env.BASE_URL || '/';
+  const cleanPath = path.startsWith('/') ? path.substring(1) : path;
+  return `${base}${cleanPath}`;
+};
+
 const Home = () => {
   const heroRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -209,7 +215,7 @@ const Home = () => {
               >
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                   <img
-                    src="./hero-image.jpg"
+                    src={getAssetPath("hero-image.jpg")}
                     alt="Equipo colaborando"
                     className="w-full h-auto object-cover"
                   />
@@ -247,8 +253,6 @@ const Home = () => {
         </div>
       </section>
 
-
-
       {/* Services Preview */}
       <section className="py-24 lg:py-32 bg-white">
         <div className="w-full px-6 lg:px-12">
@@ -272,25 +276,25 @@ const Home = () => {
                 title: 'Coaching Ejecutivo',
                 subtitle: 'Lidera desde la autenticidad',
                 description: 'Para líderes que buscan claridad, foco y gestión emocional.',
-                image: '/service-coaching.jpg',
+                image: getAssetPath('service-coaching.jpg'),
               },
               {
                 title: 'Selección Estratégica',
                 subtitle: 'Talento que encaja y aporta',
                 description: 'Proceso de selección con mirada cultural y estratégica.',
-                image: '/service-selection.jpg',
+                image: getAssetPath('service-selection.jpg'),
               },
               {
                 title: 'Equipos de Alto Rendimiento',
                 subtitle: 'Transforma la dinámica grupal',
                 description: 'Desbloquea dinámicas tóxicas y reconecta con el propósito.',
-                image: '/service-teams.jpg',
+                image: getAssetPath('service-teams.jpg'),
               },
               {
                 title: 'Formaciones',
                 subtitle: 'Aprendizaje que transforma',
                 description: 'Experiencias dinámicas que mejoran comunicación y colaboración.',
-                image: '/service-training.jpg',
+                image: getAssetPath('service-training.jpg'),
               },
             ].map((service, index) => (
               <Link
@@ -357,7 +361,7 @@ const Home = () => {
             <div className="reveal-section relative">
               <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                 <img
-                  src="./about-image.jpg"
+                  src={getAssetPath("about-image.jpg")}
                   alt="Equipo Veralya"
                   className="w-full h-auto object-cover"
                 />
@@ -398,7 +402,7 @@ const Home = () => {
                 </p>
                 <div className="flex items-center gap-4 pt-4 border-t border-gray-100">
                   <img
-                    src={`/testimonial-${index + 1}.jpg`}
+                    src={getAssetPath(`testimonial-${index + 1}.jpg`)}
                     alt={testimonial.name}
                     className="w-12 h-12 rounded-full object-cover"
                   />
