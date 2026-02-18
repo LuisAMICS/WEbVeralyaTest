@@ -6,6 +6,12 @@ import { ArrowRight, Award, BookOpen, Heart, Lightbulb, Target, Users } from 'lu
 
 gsap.registerPlugin(ScrollTrigger);
 
+const getAssetPath = (path: string) => {
+  const base = import.meta.env.BASE_URL || '/';
+  const cleanPath = path.startsWith('/') ? path.substring(1) : path;
+  return `${base}${cleanPath}`;
+};
+
 const Equipo = () => {
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -36,7 +42,7 @@ const Equipo = () => {
     {
       name: 'Mónica Arroyo Romero',
       role: 'Cofundadora & Consultora Senior',
-      image: './team-monica.png',
+      image: getAssetPath('team-monica.png'),
       imageClass: 'object-top scale-100',
       description:
         'Psicóloga y experta en recursos humanos con más de diez años de experiencia en desarrollo del talento y liderazgo en organizaciones internacionales.',
@@ -55,7 +61,7 @@ const Equipo = () => {
     {
       name: 'Raquel Arroyo Romero',
       role: 'Cofundadora & Estratega de Desarrollo',
-      image: './team-raquel.png',
+      image: getAssetPath('team-raquel.png'),
       imageClass: 'object-[center_15%] scale-[1.45] origin-top',
       description:
         'Experta en desarrollo humano y estrategia para pymes y emprendedores. Máster en Desarrollo Humano y Practitioner en PNL.',
