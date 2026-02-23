@@ -7,6 +7,12 @@ import { Link } from 'react-router-dom';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const getAssetPath = (path: string) => {
+  const base = import.meta.env.BASE_URL || '/';
+  const cleanPath = path.startsWith('/') ? path.substring(1) : path;
+  return `${base}${cleanPath}`;
+};
+
 const MainLayout = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -56,7 +62,7 @@ const MainLayout = () => {
             className="nav-item flex items-center group"
           >
             <img
-              src="/WEbVeralyaTest/veralya-logo-new.png"
+              src={getAssetPath("veralya-logo-new.svg")}
               alt="Veralya"
               className="h-10 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
             />

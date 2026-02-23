@@ -166,7 +166,7 @@ function App() {
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'bg-white/90 backdrop-blur-lg shadow-lg py-3' : 'bg-transparent py-6'}`}>
         <div className="w-full px-6 lg:px-12 flex items-center justify-between">
           <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center group">
-            <img src={getAssetPath("veralya-logo-new.png")} alt="Veralya" className="h-14 md:h-16 w-auto group-hover:scale-105 transition-transform duration-300" />
+            <img src={getAssetPath("veralya-logo-new.svg")} alt="Veralya" className="h-14 md:h-16 w-auto group-hover:scale-105 transition-transform duration-300" />
           </button>
 
           <div className="hidden lg:flex items-center gap-8">
