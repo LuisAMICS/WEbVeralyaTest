@@ -5,7 +5,7 @@ import { inspectAttr } from 'kimi-plugin-inspect-react'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: '/WEbVeralyaTest/',
+  base: '/',
   plugins: [
     react(),
     ...(mode === 'development' ? [inspectAttr()] : [])
