@@ -78,39 +78,39 @@ function App() {
 
   const services = [
     {
-      title: 'Evaluación DISC + Fuerzas Impulsoras',
-      subtitle: 'El diagnóstico que transforma equipos',
+      title: 'Evaluación conductual + Motivadores (TTI)',
+      subtitle: 'El análisis que transforma equipos',
       description: 'Identifica cómo actúa cada miembro del equipo y qué le motiva realmente. Mejora la comunicación y reduce fricciones internas.',
-      benefits: ['Perfil conductual completo', '6 motivadores fundamentales', 'Informe de 50 páginas', 'Feedback personalizado'],
-      features: ['Análisis DISC (D-I-S-C)', 'Fuerzas Impulsoras', 'Talent Insights', 'Comparativa de perfiles']
+      benefits: ['Perfil individualizado completo', 'Feedback personalizado'],
+      features: ['Análisis conductual', 'Motivadores', 'Perfil integrado', 'Comparativa de perfiles']
     },
     {
       title: 'Programa LAE N1 - Liderazgo',
       subtitle: 'Autoconocimiento del líder',
       description: 'Descubre las dimensiones ocultas de tu estilo de liderazgo mediante herramientas científicamente validadas.',
-      benefits: ['Mayor consciencia del impacto', 'Comprensión de fortalezas', 'Plan de acción SMART', 'Resultados medibles'],
-      features: ['Evaluación DISC completa', 'Modelo O.S.A.R', '5 dimensiones del liderazgo', '50 páginas de análisis']
+      benefits: ['Liderazgo en base al estilo propio', 'Comprensión de fortalezas y áreas de mejora', 'Plan de acción SMART', 'Resultados medibles', 'Mayor consciencia del impacto'],
+      features: ['Comprensión de perfiles conductuales y motivacionales', 'Modelo O.S.A.R', 'Trabajo en dimensiones del liderazgo', 'Análisis completo']
     },
     {
       title: 'Programa LAE N2 - Adaptativo',
       subtitle: 'Adaptación del líder al equipo',
-      description: 'Potencia tus hablidades para identificar estilos DISC en colaboradores y adaptar tu enfoque para maximizar el potencial.',
-      benefits: ['85% mejora en comunicación', '67% reducción de conflictos', '73% más compromiso', '92% adaptabilidad'],
-      features: ['Semáforo del Liderazgo', 'Gestión de conflictos', 'Escucha generativa', 'Preguntas poderosas']
+      description: 'Potencia tus habilidades para identificar estilos conductuales y motivacionales en colaboradores y adaptar tu enfoque para maximizar el potencial.',
+      benefits: ['Mejora en comunicación', 'Reducción de conflictos', 'Más compromiso', 'Adaptabilidad'],
+      features: ['Comunicación efectiva', 'Gestión de conflictos', 'Escucha generativa', 'Preguntas poderosas']
     },
     {
       title: 'Programa EAR - Equipos',
       subtitle: 'Equipos de Alto Rendimiento',
       description: 'Transforma equipos convencionales en equipos de alto rendimiento mediante autoconocimiento y principios sistémicos.',
-      benefits: ['37% más productividad', '48% mejor satisfacción', 'ROI 387% primer año', 'Equipos cohesionados'],
-      features: ['3 leyes sistémicas', 'Superación piloto automático', '6 módulos progresivos', 'Seguimiento continuo']
+      benefits: ['Más productividad', 'Mejor satisfacción', 'ROI positivo', 'Visión sistémica del equipo'],
+      features: ['Visión sistémica del equipo', 'Superación piloto automático', 'Módulos de trabajo e integración progresiva', 'Seguimiento continuo']
     },
     {
       title: 'Selección Estratégica',
       subtitle: 'Encuentra el talento ideal',
-      description: 'Proceso estructurado en tres fases para encontrar al candidato perfecto para tu organización.',
+      description: 'Proceso estructurado para encontrar al candidato perfecto para tu organización.',
       benefits: ['Precisión científica', 'Ahorro de tiempo', 'Reducción de riesgo', 'Acompañamiento completo'],
-      features: ['Consultoría gratuita inicial', 'Definición perfil ideal', 'Talent Comparison Report', '3-5 candidatos finalistas']
+      features: ['Consultoría sin compromiso', 'Definición Perfil conductual ideal', 'Talent Comparison Report', 'Candidatos finalistas']
     }
   ];
 
@@ -132,27 +132,27 @@ function App() {
 
   const testimonials = [
     {
-      name: 'Laura G.',
-      role: 'CEO startup software educativo',
+      name: 'Cliente (Sector Tecnológico)',
+      role: 'CEO',
       location: 'Madrid',
-      quote: 'Estábamos desbordados, cada uno tirando en una dirección. El diagnóstico DISC nos hizo ver lo que no queríamos enfrentar: falta de roles claros, comunicación pobre y desgaste. En dos semanas con Veralya, teníamos foco, estructura y un equipo que por fin respiraba en sincronía.'
+      quote: 'Estábamos desbordados, cada uno tirando en una dirección. El análisis nos hizo ver lo que no queríamos enfrentar: falta de roles claros, comunicación pobre y desgaste. En poco tiempo con Veralya, teníamos foco, estructura y un equipo que por fin respiraba en sincronía.'
     },
     {
-      name: 'Antonia R.',
+      name: 'Cliente (Sector Comercial)',
       role: 'Directora Comercial',
       location: 'Valencia',
-      quote: 'He dirigido equipos comerciales toda mi vida, pero nunca había visto una herramienta que revelara tanto en tan poco tiempo. Gracias al método DISC y a la sesión de feedback con Veralya, entendí por qué algunos de mis mejores vendedores estaban desmotivados.'
+      quote: 'He dirigido equipos comerciales toda mi vida, pero nunca había visto una herramienta que revelara tanto en tan poco tiempo. Gracias a nuestro método y a la sesión de feedback con Veralya, entendí por qué algunos de mis mejores vendedores estaban desmotivados.'
     },
     {
-      name: 'Miriam G.',
-      role: 'Responsable de equipo',
+      name: 'Cliente (Responsable de Equipo)',
+      role: 'Manager',
       location: 'Barcelona',
       quote: 'Pensaba que necesitábamos más formación, pero lo que realmente nos faltaba era comprendernos. Veralya nos ayudó a traducir nuestras diferencias en fortalezas. Hoy no solo trabajamos mejor, también nos sentimos mejor como equipo.'
     }
   ];
 
   const navLinks = [
-    { id: 'disc', label: 'Método DISC' },
+    { id: 'disc', label: 'Nuestro método' },
     { id: 'servicios', label: 'Servicios' },
     { id: 'programas', label: 'Programas' },
     { id: 'equipo', label: 'Equipo' },
@@ -178,7 +178,7 @@ function App() {
           </div>
 
           <button onClick={() => scrollToSection('contacto')} className="hidden lg:block px-6 py-3 bg-veralya-green text-white font-body text-sm font-medium rounded-full hover:bg-veralya-dark transition-colors shadow-lg">
-            Agenda tu diagnóstico
+            Agenda tu consultoría gratuita
           </button>
 
           <button className="lg:hidden p-2" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
@@ -197,7 +197,7 @@ function App() {
               </button>
             ))}
             <button onClick={() => scrollToSection('contacto')} className="mt-8 px-8 py-4 bg-veralya-green text-white font-body font-medium rounded-full">
-              Agenda tu diagnóstico
+              Agenda tu consultoría gratuita
             </button>
           </div>
         </div>
@@ -224,17 +224,17 @@ function App() {
                   <span className="word inline-block text-veralya-green">equipos</span>
                   <br />
                   <span className="word inline-block">con</span>{' '}
-                  <span className="word inline-block text-veralya-green">DISC</span>
+                  <span className="word inline-block text-veralya-green">nuestro método</span>
                 </h1>
 
                 <p className="font-body text-lg lg:text-xl text-gray-600 leading-relaxed mb-10 max-w-xl">
                   Evaluación conductual, desarrollo de liderazgo y programas de alto rendimiento
-                  basados en el método DISC y Fuerzas Impulsoras para empresas que quieren crecer.
+                  basados en nuestro método y Motivadores para empresas que quieren crecer.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button onClick={() => scrollToSection('disc')} className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-veralya-green text-white font-body font-medium rounded-full hover:bg-veralya-dark transition-all shadow-lg">
-                    Descubre el método DISC
+                    Descubre nuestro método
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </button>
                   <button onClick={() => scrollToSection('servicios')} className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-veralya-green text-veralya-green font-body font-medium rounded-full hover:bg-veralya-green hover:text-white transition-all">
@@ -292,16 +292,27 @@ function App() {
           <div className="absolute top-0 right-0 w-96 h-96 bg-veralya-light/20 rounded-full blur-3xl -mr-48 -mt-48" />
           <div className="w-full px-6 lg:px-12">
             <div className="max-w-6xl mx-auto">
+              {/* Method Section */}
               <div className="text-center max-w-3xl mx-auto mb-16">
-                <span className="reveal-section inline-block px-4 py-2 bg-white rounded-full text-veralya-green font-body text-sm font-medium mb-6 shadow-sm">El Método DISC</span>
+                <span className="reveal-section inline-block px-4 py-2 bg-white rounded-full text-veralya-green font-body text-sm font-medium mb-6 shadow-sm">Nuestro Método</span>
                 <h2 className="reveal-section font-display text-4xl lg:text-5xl font-semibold text-veralya-dark mb-6">
                   Conoce el <span className="text-veralya-green">ADN conductual</span> de tu equipo
                 </h2>
                 <p className="reveal-section font-body text-lg text-gray-600">
-                  El método DISC identifica cuatro estilos de comportamiento que determinan cómo nos comunicamos,
-                  tomamos decisiones y respondemos a los desafíos. Combinado con las Fuerzas Impulsoras,
+                  Nuestro método identifica cuatro estilos de comportamiento que determinan cómo nos comunicamos,
+                  tomamos decisiones y respondemos a los desafíos. Combinado con los Motivadores (TTI),
                   descubrimos no solo CÓMO actúas, sino POR QUÉ.
                 </p>
+              </div>
+
+              {/* Método 5D Placeholder */}
+              <div className="reveal-section mb-20 bg-white/50 backdrop-blur-sm rounded-3xl p-8 lg:p-12 border border-veralya-nude/30 shadow-sm text-center">
+                <div className="max-w-3xl mx-auto">
+                  <h3 className="font-display text-3xl font-semibold text-veralya-dark mb-4">Método 5D</h3>
+                  <p className="font-body text-veralya-green text-lg mb-6">Una metodología práctica para diagnosticar, intervenir y medir evolución</p>
+                  <div className="w-20 h-1 bg-veralya-green/20 mx-auto mb-8" />
+                  <p className="font-body text-gray-500 italic">Una metodología orientada a resultados tangibles y transformación sostenible en la organización.</p>
+                </div>
               </div>
 
               <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
@@ -319,7 +330,7 @@ function App() {
                 </div>
 
                 <div className="reveal-section">
-                  <h3 className="font-display text-2xl font-semibold text-veralya-dark mb-6">Las 6 Fuerzas Impulsoras</h3>
+                  <h3 className="font-display text-2xl font-semibold text-veralya-dark mb-6">Las 6 dimensiones conductuales</h3>
                   <div className="space-y-3">
                     {motivators.map((m, index) => (
                       <div key={index} className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm border border-veralya-nude/10 hover:border-veralya-nude/40 transition-colors">
@@ -338,7 +349,7 @@ function App() {
 
               <div className="reveal-section bg-white rounded-2xl p-8 shadow-lg border border-veralya-nude/20 relative">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-veralya-nude/5 rounded-full -mr-16 -mt-16" />
-                <h3 className="font-display text-2xl font-semibold text-veralya-dark mb-6 text-center italic">¿Qué conseguimos con DISC + Fuerzas Impulsoras?</h3>
+                <h3 className="font-display text-2xl font-semibold text-veralya-dark mb-6 text-center italic">¿Qué conseguimos con nuestro método + Motivadores?</h3>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {[
                     'Identificar cómo actúa cada persona y qué le motiva',
@@ -424,7 +435,7 @@ function App() {
               <div className="text-center max-w-3xl mx-auto mb-16">
                 <span className="reveal-section inline-block px-4 py-2 bg-white/10 rounded-full text-veralya-accent font-body text-sm font-medium mb-6">Nuestros Programas</span>
                 <h2 className="reveal-section font-display text-4xl lg:text-5xl font-semibold mb-6">
-                  Programas basados en <span className="text-veralya-accent">DISC</span>
+                  Programas basados en <span className="text-veralya-accent">nuestro método</span>
                 </h2>
                 <p className="reveal-section font-body text-lg text-white/80">
                   Estructurados para generar cambios profundos y sostenibles en el liderazgo
@@ -437,36 +448,36 @@ function App() {
                   {
                     title: 'LAE N1',
                     subtitle: 'Liderazgo Altamente Efectivo - Nivel 1',
-                    desc: 'Autoconocimiento del líder mediante DISC y Motivadores. 50 páginas de análisis personalizado.',
-                    duration: '3 meses',
-                    features: ['Perfil DISC completo', '6 motivadores', 'Modelo O.S.A.R', 'Plan SMART']
+                    desc: 'Autoconocimiento del líder mediante perfiles conductuales y Motivadores. Informe motivacional y conductual completo.',
+                    duration: 'Formato adaptable',
+                    features: ['Perfil individualizado completo', 'Motivadores', 'Modelo O.S.A.R', 'Plan SMART']
                   },
                   {
                     title: 'LAE N2',
                     subtitle: 'Liderazgo Adaptativo - Nivel 2',
-                    desc: 'Adapta tu estilo según las necesidades del equipo. Identifica perfiles DISC en colaboradores.',
-                    duration: '4 meses',
-                    features: ['Semáforo del Liderazgo', 'Gestión de conflictos', 'Escucha generativa', '85% mejora comunicación']
+                    desc: 'Adapta tu estilo según las necesidades del equipo. Identifica perfiles conductuales y motivacionales en colaboradores.',
+                    duration: 'Implementación por fases',
+                    features: ['Comunicación efectiva', 'Gestión de conflictos', 'Escucha generativa', '85% mejora comunicación']
                   },
                   {
                     title: 'EAR',
                     subtitle: 'Equipos de Alto Rendimiento',
-                    desc: 'Transforma equipos mediante las 3 leyes sistémicas y superación del piloto automático.',
-                    duration: '6 meses',
-                    features: ['3 leyes sistémicas', '6 módulos progresivos', 'ROI 387%', 'Seguimiento continuo']
+                    desc: 'Transforma equipos mediante la visión sistémica y superación del piloto automático.',
+                    duration: 'Intervención a medida',
+                    features: ['Visión sistémica', 'Módulos de trabajo', 'ROI 387%', 'Seguimiento continuo']
                   },
                   {
                     title: 'Selección Directiva',
                     subtitle: 'Proceso de Selección de Talento',
-                    desc: 'Proceso en 3 fases con evaluación DISC para encontrar el candidato ideal.',
-                    duration: 'Variable',
-                    features: ['Consultoría inicial gratis', 'Perfil DISC ideal', 'Talent Comparison', '3-5 finalistas']
+                    desc: 'Proceso en 3 fases para encontrar el candidato ideal mediante evaluación conductual.',
+                    duration: 'A medida',
+                    features: ['Consultoría sin compromiso', 'Perfil conductual ideal', 'Talent Comparison', 'Candidatos finalistas']
                   }
                 ].map((program, index) => (
                   <div key={index} className="reveal-section bg-white/5 backdrop-blur-sm rounded-2xl p-8 hover:bg-white/10 transition-colors border border-white/10 hover:border-veralya-nude/30">
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="font-display text-2xl font-semibold">{program.title}</h3>
-                      <span className="px-3 py-1 bg-veralya-nude/20 text-veralya-nude border border-veralya-nude/30 rounded-full text-sm font-body">{program.duration}</span>
+                      <span className="px-3 py-1 bg-veralya-nude/20 text-veralya-nude border border-veralya-nude/30 rounded-full text-sm font-body">A medida</span>
                     </div>
                     <p className="font-body text-veralya-accent mb-3">{program.subtitle}</p>
                     <p className="font-body text-white/80 mb-6">{program.desc}</p>
@@ -504,18 +515,18 @@ function App() {
                     role: 'Cofundadora & Consultora Senior',
                     image: getAssetPath('team-monica.png'),
                     imageClass: 'object-top scale-100',
-                    desc: 'Psicóloga y experta en recursos humanos con más de diez años de experiencia en desarrollo del talento y liderazgo en organizaciones internacionales.',
-                    specialties: ['Análisis conductual y motivacional (DISC)', 'Fuerzas Impulsoras 3 TTI Success Insights', 'Desarrollo de liderazgo', 'Comunicación efectiva'],
-                    credentials: ['Certificada en DISC y Fuerzas Impulsoras', 'Experta en desarrollo del talento', 'Experiencia en organizaciones internacionales']
+                    desc: 'Máster en Dirección y Gestión de Recursos Humanos con más de diez años de experiencia en desarrollo del talento y gestión de equipos.',
+                    specialties: ['Gestión de equipos', 'Análisis conductual y motivacional', 'Certificación en análisis de la conducta humana por TTI Success Insights', 'Desarrollo de liderazgo'],
+                    credentials: ['Máster en Dirección y Gestión de Recursos Humanos', 'Certificación en análisis de la conducta humana por TTI Success Insights']
                   },
                   {
                     name: 'Raquel Arroyo Romero',
                     role: 'Cofundadora & Estratega de Desarrollo',
                     image: getAssetPath('team-raquel.png'),
                     imageClass: 'object-[center_15%] scale-[1.45] origin-top',
-                    desc: 'Experta en desarrollo humano y estrategia para pymes y emprendedores. Máster en Desarrollo Humano y Practitioner en PNL.',
-                    specialties: ['Estrategia para pymes y emprendedores', 'Programación Neurolingüística (PNL)', 'DISC y Fuerzas Impulsoras TTI', 'Mentalidad y comportamiento organizacional'],
-                    credentials: ['Máster en Desarrollo Humano', 'Practitioner en PNL', 'Certificada en DISC y Fuerzas Impulsoras']
+                    desc: 'Experta en desarrollo humano, comunicación e inteligencia emocional. Máster en Desarrollo Humano. Planificación estratégica para empresas y pymes.',
+                    specialties: ['Planificación estratégica para empresas y pymes', 'Inteligencia emocional', 'Certificación en análisis de la conducta humana por TTI Success Insights', 'Comportamiento organizacional'],
+                    credentials: ['Máster en Desarrollo Humano', 'Certificación en análisis de la conducta humana por TTI Success Insights']
                   }
                 ].map((member, index) => (
                   <div key={index} className="reveal-section bg-white rounded-[2rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 flex flex-col">
@@ -579,9 +590,9 @@ function App() {
           <div className="w-full px-6 lg:px-12">
             <div className="max-w-6xl mx-auto">
               <div className="text-center max-w-3xl mx-auto mb-16">
-                <span className="reveal-section inline-block px-4 py-2 bg-white rounded-full text-veralya-green font-body text-sm font-medium mb-6">Testimonios</span>
+                <span className="reveal-section inline-block px-4 py-2 bg-white rounded-full text-veralya-green font-body text-sm font-medium mb-6">Resultados</span>
                 <h2 className="reveal-section font-display text-4xl lg:text-5xl font-semibold text-veralya-dark mb-6">
-                  Lo que dicen quienes han vivido la <span className="text-veralya-green">experiencia DISC</span>
+                  Resultados y <span className="text-veralya-green">aprendizajes</span>
                 </h2>
               </div>
 
@@ -594,7 +605,6 @@ function App() {
                     </div>
                     <p className="font-body text-gray-700 leading-relaxed mb-6 text-sm">"{t.quote.substring(0, 180)}..."</p>
                     <div className="flex items-center gap-4 pt-4 border-t border-gray-100">
-                      <img src={getAssetPath(`testimonial-${index + 1}.jpg`)} alt={t.name} className="w-12 h-12 rounded-full object-cover" />
                       <div>
                         <h4 className="font-display font-semibold text-veralya-dark">{t.name}</h4>
                         <p className="font-body text-xs text-gray-500">{t.role}</p>
@@ -615,15 +625,17 @@ function App() {
           <div className="relative z-10 w-full px-6 lg:px-12">
             <div className="reveal-section max-w-4xl mx-auto text-center">
               <h2 className="font-display text-4xl lg:text-5xl xl:text-6xl font-semibold text-white mb-6">
-                Tu equipo puede ser tu <span className="text-veralya-accent">mayor activo</span>
+                Consultoría sin compromiso
               </h2>
+              <p className="font-display text-2xl text-white/90 mb-6">
+                Propuesta en 24h
+              </p>
               <p className="font-body text-xl text-white/80 mb-10 max-w-2xl mx-auto">
-                Empecemos a activarlo hoy. Agenda tu evaluación DISC gratuita y descubre
-                el potencial oculto de tu organización.
+                En una primera conversación entendemos tu situación, detectamos el cuello de botella principal y te enviamos una propuesta clara.
               </p>
 
               <div className="flex flex-wrap justify-center gap-4 mb-10">
-                {['Primera evaluación DISC gratuita', 'Diagnóstico sin compromiso', 'Propuesta en 48h'].map((b, i) => (
+                {['Consultoría sin compromiso', 'Propuesta en 24h'].map((b, i) => (
                   <div key={i} className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white/90">
                     <CheckCircle className="w-4 h-4 text-veralya-accent" />
                     <span className="text-sm font-body">{b}</span>
@@ -631,8 +643,8 @@ function App() {
                 ))}
               </div>
 
-              <a href="https://calendly.com/descubre-veralyaconsulting" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-veralya-dark font-body font-medium rounded-full hover:bg-veralya-accent transition-colors shadow-lg">
-                Agenda tu evaluación DISC gratuita
+              <a href="#contacto" className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-veralya-dark font-body font-medium rounded-full hover:bg-veralya-accent transition-colors shadow-lg">
+                Agenda tu consultoría gratuita
                 <ArrowRight className="w-5 h-5" />
               </a>
             </div>
@@ -651,7 +663,7 @@ function App() {
                 <img src={getAssetPath("veralya-logo-footer.png")} alt="Veralya" className="h-16 w-auto object-contain" />
               </div>
               <p className="font-body text-white/70 mb-6 max-w-sm">
-                Transformamos equipos mediante evaluación DISC, desarrollo de liderazgo
+                Transformamos equipos mediante análisis conductual, desarrollo de liderazgo
                 y programas de alto rendimiento.
               </p>
               <div className="space-y-2">
@@ -664,7 +676,7 @@ function App() {
             <div>
               <h4 className="font-display font-semibold text-lg mb-6">Servicios</h4>
               <ul className="space-y-3">
-                <li><button onClick={() => scrollToSection('disc')} className="font-body text-sm text-white/70 hover:text-veralya-green transition-colors">Evaluación DISC</button></li>
+                <li><button onClick={() => scrollToSection('disc')} className="font-body text-sm text-white/70 hover:text-veralya-green transition-colors">Análisis conductual</button></li>
                 <li><button onClick={() => scrollToSection('programas')} className="font-body text-sm text-white/70 hover:text-veralya-green transition-colors">Programa LAE N1</button></li>
                 <li><button onClick={() => scrollToSection('programas')} className="font-body text-sm text-white/70 hover:text-veralya-green transition-colors">Programa LAE N2</button></li>
                 <li><button onClick={() => scrollToSection('programas')} className="font-body text-sm text-white/70 hover:text-veralya-green transition-colors">Programa EAR</button></li>
@@ -677,7 +689,7 @@ function App() {
               <ul className="space-y-3">
                 <li><button onClick={() => scrollToSection('equipo')} className="font-body text-sm text-white/70 hover:text-veralya-green transition-colors">Quiénes Somos</button></li>
                 <li><button onClick={() => scrollToSection('equipo')} className="font-body text-sm text-white/70 hover:text-veralya-green transition-colors">Nuestro Equipo</button></li>
-                <li><button onClick={() => scrollToSection('disc')} className="font-body text-sm text-white/70 hover:text-veralya-green transition-colors">Método DISC</button></li>
+                <li><button onClick={() => scrollToSection('disc')} className="font-body text-sm text-white/70 hover:text-veralya-green transition-colors">Nuestro método</button></li>
                 <li><button onClick={() => scrollToSection('contacto')} className="font-body text-sm text-white/70 hover:text-veralya-green transition-colors">Contacto</button></li>
               </ul>
             </div>
@@ -700,7 +712,7 @@ function App() {
               <div className="flex items-center gap-4">
                 <span className="text-white/40 font-body text-xs">TTI Success Insights Partner</span>
                 <span className="text-white/20">•</span>
-                <span className="text-white/40 font-body text-xs">DISC Certificado</span>
+                <span className="text-white/40 font-body text-xs">Análisis Conductual</span>
               </div>
             </div>
           </div>

@@ -30,7 +30,7 @@ const Services = () => {
       image: '/service-coaching.jpg',
       icon: <UserCircle className="w-6 h-6" />,
       features: [
-        'Evaluación DISC personalizada',
+        'Análisis conductual personalizado',
         'Descubrimiento de motivadores',
         'Plan de desarrollo individual',
         'Sesiones de seguimiento',
@@ -46,7 +46,7 @@ const Services = () => {
       icon: <Search className="w-6 h-6" />,
       features: [
         'Definición del perfil ideal',
-        'Evaluación DISC + Motivadores',
+        'Análisis conductual + Motivadores',
         'Proceso de 3 fases estructurado',
         'Informe comparativo de candidatos',
       ],
@@ -141,7 +141,7 @@ const Services = () => {
             <span className="text-veralya-green">transformar</span>
           </h2>
           <p className="font-body text-lg text-gray-600">
-            Cada organización es única. Por eso adaptamos nuestras metodologías 
+            Cada organización es única. Por eso adaptamos nuestras metodologías
             a tus necesidades específicas para maximizar el impacto.
           </p>
         </div>
@@ -154,11 +154,10 @@ const Services = () => {
           {services.map((service, index) => (
             <div
               key={service.id}
-              className={`service-card relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                activeIndex === index
+              className={`service-card relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${activeIndex === index
                   ? 'lg:flex-[3] flex-auto h-[400px] lg:h-auto'
                   : 'lg:flex-1 flex-auto h-[120px] lg:h-auto'
-              }`}
+                }`}
               onMouseEnter={() => setActiveIndex(index)}
               onClick={() => setActiveIndex(index)}
             >
@@ -167,17 +166,15 @@ const Services = () => {
                 <img
                   src={service.image}
                   alt={service.title}
-                  className={`w-full h-full object-cover transition-transform duration-700 ${
-                    activeIndex === index ? 'scale-100' : 'scale-110'
-                  }`}
+                  className={`w-full h-full object-cover transition-transform duration-700 ${activeIndex === index ? 'scale-100' : 'scale-110'
+                    }`}
                 />
                 {/* Gradient overlay */}
                 <div
-                  className={`absolute inset-0 transition-opacity duration-500 ${
-                    activeIndex === index
+                  className={`absolute inset-0 transition-opacity duration-500 ${activeIndex === index
                       ? 'bg-gradient-to-t from-veralya-dark/90 via-veralya-dark/50 to-transparent'
                       : 'bg-gradient-to-t from-veralya-dark/80 to-veralya-dark/40'
-                  }`}
+                    }`}
                 />
               </div>
 
@@ -185,9 +182,8 @@ const Services = () => {
               <div className="relative h-full p-6 lg:p-8 flex flex-col justify-end">
                 {/* Icon */}
                 <div
-                  className={`mb-4 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white transition-all duration-500 ${
-                    activeIndex === index ? 'opacity-100' : 'opacity-70'
-                  }`}
+                  className={`mb-4 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white transition-all duration-500 ${activeIndex === index ? 'opacity-100' : 'opacity-70'
+                    }`}
                 >
                   {service.icon}
                 </div>
@@ -199,11 +195,10 @@ const Services = () => {
 
                 {/* Expanded content */}
                 <div
-                  className={`overflow-hidden transition-all duration-500 ${
-                    activeIndex === index
+                  className={`overflow-hidden transition-all duration-500 ${activeIndex === index
                       ? 'max-h-[400px] opacity-100'
                       : 'max-h-0 opacity-0 lg:max-h-0'
-                  }`}
+                    }`}
                 >
                   <p className="font-body text-sm text-white/80 mb-2">
                     {service.subtitle}

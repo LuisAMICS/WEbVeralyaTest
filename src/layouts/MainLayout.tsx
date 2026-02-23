@@ -88,7 +88,7 @@ const MainLayout = () => {
               to="/contacto"
               className="magnetic-btn px-6 py-3 bg-veralya-green text-white font-body text-sm font-medium rounded-full hover:bg-veralya-dark transition-colors duration-300 shadow-lg hover:shadow-xl"
             >
-              Agenda tu diagnóstico
+              Agenda tu consultoría gratuita
             </Link>
           </div>
 
@@ -134,7 +134,7 @@ const MainLayout = () => {
             onClick={() => setIsMobileMenuOpen(false)}
             className="mt-8 px-8 py-4 bg-veralya-green text-white font-body font-medium rounded-full"
           >
-            Agenda tu diagnóstico
+            Agenda tu consultoría gratuita
           </Link>
         </div>
       </div>

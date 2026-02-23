@@ -383,7 +383,7 @@ const Contacto = () => {
                 className="inline-flex items-center gap-3 px-8 py-4 bg-white text-veralya-dark font-body font-medium rounded-full hover:bg-veralya-accent transition-colors duration-300 shadow-lg"
               >
                 <Calendar className="w-5 h-5" />
-                Agenda tu diagnóstico gratuito
+                Agenda tu consultoría gratuita
               </a>
             </div>
           </div>

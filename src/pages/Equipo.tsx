@@ -45,17 +45,17 @@ const Equipo = () => {
       image: getAssetPath('team-monica.png'),
       imageClass: 'object-top scale-100',
       description:
-        'Psicóloga y experta en recursos humanos con más de diez años de experiencia en desarrollo del talento y liderazgo en organizaciones internacionales.',
+        'Máster en Dirección y Gestión de Recursos Humanos con más de diez años de experiencia en desarrollo del talento y gestión de equipos.',
       specialties: [
-        'Análisis conductual y motivacional (DISC)',
-        'Fuerzas Impulsoras 3 TTI Success Insights',
+        'Gestión de equipos',
+        'Análisis conductual y motivacional',
+        'Certificación en análisis de la conducta humana por TTI Success Insights',
         'Desarrollo de liderazgo',
-        'Comunicación efectiva',
       ],
       credentials: [
-        'Certificada en DISC y Fuerzas Impulsoras',
+        'Máster en Dirección y Gestión de Recursos Humanos',
+        'Certificación en análisis de la conducta humana por TTI Success Insights',
         'Experta en desarrollo del talento',
-        'Experiencia en organizaciones internacionales',
       ],
     },
     {
@@ -64,17 +64,16 @@ const Equipo = () => {
       image: getAssetPath('team-raquel.png'),
       imageClass: 'object-[center_15%] scale-[1.45] origin-top',
       description:
-        'Experta en desarrollo humano y estrategia para pymes y emprendedores. Máster en Desarrollo Humano y Practitioner en PNL.',
+        'Experta en desarrollo humano, comunicación e inteligencia emocional. Máster en Desarrollo Humano. Planificación estratégica para empresas y pymes.',
       specialties: [
-        'Estrategia para pymes y emprendedores',
-        'Programación Neurolingüística (PNL)',
-        'DISC y Fuerzas Impulsoras TTI',
+        'Planificación estratégica para empresas y pymes',
+        'Inteligencia emocional',
+        'Certificación en análisis de la conducta humana por TTI Success Insights',
         'Mentalidad y comportamiento organizacional',
       ],
       credentials: [
-        'Máster en Desarrollo Humano',
-        'Practitioner en PNL',
-        'Certificada en DISC y Fuerzas Impulsoras',
+        'Máster en Desarrollo Humano, comunicación e inteligencia emocional',
+        'Certificación en análisis de la conducta humana por TTI Success Insights',
       ],
     },
   ];
@@ -141,8 +140,8 @@ const Equipo = () => {
                 Mónica y Raquel, hermanas, socias y profesionales apasionadas por el desarrollo del talento
               </h2>
               <p className="font-body text-gray-600 mb-6 leading-relaxed">
-                Nuestra experiencia en coaching, PNL, inteligencia emocional y diagnóstico de perfiles
-                (DISC + Fuerzas Impulsoras) nos permite trabajar desde una perspectiva estratégica y
+                Nuestra experiencia en coaching, inteligencia emocional y análisis de perfiles
+                con nuestro método y Motivadores nos permite trabajar desde una perspectiva estratégica y
                 humanista a la vez.
               </p>
               <p className="font-body text-gray-600 mb-8 leading-relaxed">
@@ -361,7 +360,7 @@ const Equipo = () => {
               Hablemos de tu equipo
             </h2>
             <p className="font-body text-xl text-white/80 mb-10 max-w-2xl mx-auto">
-              Diseñemos juntos la evolución que necesitas. Agenda tu diagnóstico gratuito
+              Diseñemos juntos la evolución que necesitas. Agenda tu consultoría gratuita
               y descubre el potencial oculto de tu organización.
             </p>
 

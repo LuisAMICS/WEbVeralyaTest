@@ -13,12 +13,12 @@ const Methodology = () => {
   const steps = [
     {
       number: '01',
-      title: 'Diagnóstico con DISC + Motivadores',
+      title: 'Análisis con nuestro método + Motivadores',
       description:
         'Evaluación conductual del colectivo mediante test TTI certificado. Identificamos patrones de comportamiento y motivadores clave para diseñar la intervención con precisión.',
       icon: <ClipboardList className="w-6 h-6" />,
       details: [
-        'Test Access Inside (DISC + Fuerzas Impulsoras)',
+        'Test TTI Success Insights (conducta + motivadores)',
         'Lectura de resultados a nivel grupal',
         'Identificación de fortalezas y áreas de mejora',
       ],
@@ -131,7 +131,7 @@ const Methodology = () => {
             <span className="text-veralya-green">resultados medibles</span>
           </h2>
           <p className="font-body text-lg text-gray-600">
-            Combinamos diagnóstico científico, diseño personalizado y formación 
+            Combinamos análisis científico, diseño personalizado y formación
             aplicada para garantizar resultados sostenibles.
           </p>
         </div>
@@ -159,9 +159,8 @@ const Methodology = () => {
             {steps.map((step, index) => (
               <div
                 key={index}
-                className={`step-item relative grid lg:grid-cols-2 gap-8 lg:gap-16 items-center ${
-                  index % 2 === 1 ? 'lg:flex-row-reverse' : ''
-                }`}
+                className={`step-item relative grid lg:grid-cols-2 gap-8 lg:gap-16 items-center ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''
+                  }`}
               >
                 {/* Content */}
                 <div
@@ -204,9 +203,8 @@ const Methodology = () => {
 
                 {/* Node - Desktop */}
                 <div
-                  className={`hidden lg:flex justify-center ${
-                    index % 2 === 1 ? 'lg:order-1' : 'lg:order-2'
-                  }`}
+                  className={`hidden lg:flex justify-center ${index % 2 === 1 ? 'lg:order-1' : 'lg:order-2'
+                    }`}
                 >
                   <div className="relative">
                     <div className="w-20 h-20 rounded-full bg-veralya-green flex items-center justify-center text-white font-display text-2xl font-bold shadow-lg pulse-glow">

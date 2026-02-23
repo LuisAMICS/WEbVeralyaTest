@@ -99,22 +99,22 @@ const Home = () => {
 
   const testimonials = [
     {
-      name: 'Laura G.',
-      role: 'CEO de startup de software educativo',
+      name: 'Dirección General',
+      role: 'Sector Tecnológico',
       location: 'Madrid',
-      quote: 'Estábamos desbordados, cada uno tirando en una dirección. El diagnóstico DISC nos hizo ver lo que no queríamos enfrentar: falta de roles claros, comunicación pobre y desgaste. En dos semanas con Veralya, teníamos foco, estructura y un equipo que por fin respiraba en sincronía.',
+      quote: 'Gracias al análisis conductual logramos identificar cuellos de botella en la comunicación que no veíamos. En poco tiempo, el equipo recuperó el foco y la estructura necesaria para escalar sin desgaste.',
     },
     {
-      name: 'Antonia R.',
-      role: 'Directora Comercial',
+      name: 'Dirección Comercial',
+      role: 'Sector Servicios',
       location: 'Valencia',
-      quote: 'He dirigido equipos comerciales toda mi vida, pero nunca había visto una herramienta que revelara tanto en tan poco tiempo. Gracias al método DISC y a la sesión de feedback con Veralya, entendí por qué algunos de mis mejores vendedores estaban desmotivados.',
+      quote: 'Entender los motivadores de cada perfil cambió nuestra forma de liderar. Ahora las reuniones son más cortas, las decisiones más ágiles y el equipo está mucho más comprometido con los objetivos.',
     },
     {
-      name: 'Miriam G.',
-      role: 'Responsable de equipo',
+      name: 'Responsable de RRHH',
+      role: 'Sector Industrial',
       location: 'Barcelona',
-      quote: 'Pensaba que necesitábamos más formación, pero lo que realmente nos faltaba era comprendernos. Veralya nos ayudó a traducir nuestras diferencias en fortalezas. Hoy no solo trabajamos mejor, también nos sentimos mejor como equipo.',
+      quote: 'Veralya nos ayudó a traducir las diferencias individuales en fortalezas colectivas. No solo trabajamos mejor, sino que hemos reducido drásticamente la rotación en puestos críticos.',
     },
   ];
 
@@ -167,7 +167,7 @@ const Home = () => {
                   to="/contacto"
                   className="magnetic-btn group inline-flex items-center justify-center gap-3 px-8 py-4 bg-veralya-green text-white font-body font-medium rounded-full hover:bg-veralya-dark transition-all duration-300 shadow-lg hover:shadow-xl"
                 >
-                  Descubre cómo lo hacemos
+                  Agenda tu consultoría gratuita
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
@@ -447,15 +447,15 @@ const Home = () => {
               <span className="text-veralya-accent">mayor activo</span>
             </h2>
             <p className="font-body text-xl text-white/80 mb-10 max-w-2xl mx-auto">
-              Empecemos a activarlo hoy. Agenda tu diagnóstico gratuito y descubre
+              Empecemos a activarlo hoy. Agenda tu consultoría gratuita y descubre
               el potencial oculto de tu organización.
             </p>
 
             <div className="flex flex-wrap justify-center gap-4 mb-10">
               {[
                 'Primera sesión de consultoría gratuita',
-                'Diagnóstico inicial sin compromiso',
-                'Propuesta personalizada en 48h',
+                'Consultoría inicial sin compromiso',
+                'Propuesta personalizada en 24h',
               ].map((benefit, index) => (
                 <div
                   key={index}
@@ -471,7 +471,7 @@ const Home = () => {
               to="/contacto"
               className="magnetic-btn group inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-veralya-dark font-body font-medium rounded-full hover:bg-veralya-accent transition-colors duration-300 shadow-lg"
             >
-              Agenda tu diagnóstico gratuito
+              Agenda tu consultoría gratuita
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>

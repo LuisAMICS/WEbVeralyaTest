@@ -33,7 +33,7 @@ const Programs = () => {
       format: 'Presencial, online o mixto',
       icon: <Star className="w-6 h-6" />,
       features: [
-        'Evaluación DISC completa (50 páginas de análisis)',
+        'Análisis conductual completo con nuestro método',
         'Descubrimiento de los 6 motivadores fundamentales',
         'Modelo O.S.A.R para romper el piloto automático',
         '5 dimensiones del liderazgo efectivo',
@@ -53,21 +53,21 @@ const Programs = () => {
       subtitle: 'Liderazgo Adaptativo - Nivel 2',
       description:
         'Potencia tus habilidades de liderazgo a través del conocimiento y aplicación de los modelos DISC y Motivadores. Aprende a identificar diferentes estilos de comportamiento y adaptar tu enfoque para maximizar el potencial de cada miembro de tu equipo.',
-      duration: '4 meses',
+      duration: 'A medida',
       format: 'Presencial, online o mixto',
       icon: <Users className="w-6 h-6" />,
       features: [
-        'Identificación de estilos DISC en colaboradores',
+        'Identificación de perfiles conductuales en colaboradores',
         'Reconocimiento de motivadores en el equipo',
         'El Semáforo del Liderazgo Consciente',
         'Escucha generativa y preguntas poderosas',
         'Gestión de conflictos por diferencias de perfil',
       ],
       benefits: [
-        '85% de mejora en comunicación con el equipo',
-        '67% de reducción en conflictos interpersonales',
-        '73% de incremento en compromiso del equipo',
-        '92% de mejora en adaptabilidad del líder',
+        'Mejora en comunicación con el equipo',
+        'Reducción en conflictos interpersonales',
+        'Mayor compromiso del equipo',
+        'Mejor adaptabilidad del líder',
       ],
       color: 'from-veralya-emerald to-veralya-dark',
     },
@@ -82,15 +82,15 @@ const Programs = () => {
       icon: <Target className="w-6 h-6" />,
       features: [
         'Las 3 leyes sistémicas: Pertenencia, Equilibrio, Reconocimiento',
-        'Metodología DISC para autoconocimiento en equipos',
+        'Análisis conductual para autoconocimiento en equipos',
         'Sistema de Motivadores: el motor del compromiso',
         'Superación del piloto automático',
         '6 módulos progresivos con seguimiento',
       ],
       benefits: [
-        '37% de incremento en productividad (estudio Harvard)',
-        '48% de mejora en satisfacción de miembros',
-        'ROI promedio de 387% durante el primer año',
+        'Incremento en productividad del equipo',
+        'Mejora en satisfacción de miembros',
+        'ROI positivo y medible',
         'Equipos más cohesionados y motivados',
       ],
       color: 'from-veralya-accent to-veralya-green',
@@ -107,9 +107,9 @@ const Programs = () => {
       features: [
         'Primera sesión de consultoría gratuita',
         'Definición del perfil con análisis TTI',
-        'Evaluación completa con DISC + Motivadores',
+        'Análisis conductual + Motivadores',
         'Talent Comparison Report',
-        'Propuesta de 3-5 candidatos finalistas',
+        'Propuesta de candidatos finalistas',
       ],
       benefits: [
         'Precisión en la selección con metodología científica',
@@ -181,7 +181,7 @@ const Programs = () => {
             <span className="text-veralya-green">transformar</span>
           </h2>
           <p className="font-body text-lg text-gray-600">
-            Cada programa está estructurado para generar cambios profundos y 
+            Cada programa está estructurado para generar cambios profundos y
             sostenibles en el liderazgo y el rendimiento de los equipos.
           </p>
         </div>
@@ -220,20 +220,18 @@ const Programs = () => {
                     </span>
                   </div>
                   <ChevronDown
-                    className={`w-6 h-6 text-veralya-green transition-transform duration-300 ${
-                      expandedProgram === program.id ? 'rotate-180' : ''
-                    }`}
+                    className={`w-6 h-6 text-veralya-green transition-transform duration-300 ${expandedProgram === program.id ? 'rotate-180' : ''
+                      }`}
                   />
                 </div>
               </button>
 
               {/* Expanded Content */}
               <div
-                className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                  expandedProgram === program.id
+                className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${expandedProgram === program.id
                     ? 'max-h-[800px] opacity-100'
                     : 'max-h-0 opacity-0'
-                }`}
+                  }`}
               >
                 <div className="p-6 lg:p-8 pt-0 border-t border-gray-100">
                   <p className="font-body text-gray-600 mb-8">

@@ -60,7 +60,7 @@ const About = () => {
   const pillars = [
     {
       icon: <Puzzle className="w-6 h-6" />,
-      title: 'Coaching + PNL + DISC',
+      title: 'Coaching + PNL + Nuestro método',
       description: 'Combinamos las mejores metodologías para un desarrollo integral.',
     },
     {
@@ -102,9 +102,9 @@ const About = () => {
             </h2>
 
             <p className="font-body text-lg text-gray-600 mb-8 leading-relaxed">
-              No traemos soluciones estándar. Creamos espacios donde el talento 
-              se activa y florece. Nuestro enfoque combina el rigor científico 
-              de las evaluaciones psicométricas con la calidez del acompañamiento 
+              No traemos soluciones estándar. Creamos espacios donde el talento
+              se activa y florece. Nuestro enfoque combina el rigor científico
+              de las evaluaciones psicométricas con la calidez del acompañamiento
               humano.
             </p>
 

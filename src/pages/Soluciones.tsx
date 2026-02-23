@@ -30,8 +30,7 @@ const Soluciones = () => {
         'Plan de desarrollo personalizado',
       ],
       features: [
-        'Evaluación DISC completa',
-        'Descubrimiento de motivadores',
+        'Comprensión de perfiles conductuales y motivacionales',
         'Sesiones individuales de coaching',
         'Seguimiento y medición de progreso',
       ],
@@ -49,7 +48,7 @@ const Soluciones = () => {
         'Informe comparativo de candidatos',
       ],
       features: [
-        'Definición del perfil ideal con DISC',
+        'Definición del Perfil conductual ideal',
         'Evaluación completa de candidatos',
         'Entrevistas especializadas',
         'Acompañamiento en la decisión final',
@@ -68,10 +67,10 @@ const Soluciones = () => {
         'Alineación con objetivos estratégicos',
       ],
       features: [
-        'Análisis DISC del equipo completo',
-        'Las 3 leyes sistémicas',
+        'Análisis conductual y motivacional del equipo completo',
+        'Módulos de trabajo e integración progresiva',
         'Superación del piloto automático',
-        'Programa de 6 meses con seguimiento',
+        'Seguimiento y medición de evolución',
       ],
     },
     {
@@ -87,15 +86,14 @@ const Soluciones = () => {
         'Equipos más comprometidos',
       ],
       features: [
-        'Comunicación efectiva y liderazgo',
-        'Gestión de conflictos',
+        'Comunicación altamente efectiva (Gestión de conflictos, escucha generativa y preguntas poderosas)',
         'Trabajo en equipo y colaboración',
         'Formación personalizada por necesidad',
       ],
     },
   ];
 
-  const discFeatures = [
+  const methodFeatures = [
     'Identificar cómo actúa cada miembro del equipo y qué le motiva realmente',
     'Mejorar la comunicación y reducir fricciones internas',
     'Alinear comportamientos y motivaciones con los objetivos estratégicos',
@@ -151,13 +149,13 @@ const Soluciones = () => {
             <p className="reveal-element font-body text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto mb-10">
               En Veralya Consulting ayudamos a CEOs, directivos de RRHH y responsables comerciales
               a desarrollar equipos que rinden más, con menos fricciones, gracias a herramientas
-              como DISC, coaching ejecutivo y PNL.
+              con nuestro método, coaching ejecutivo y PNL.
             </p>
             <Link
               to="/contacto"
               className="reveal-element magnetic-btn group inline-flex items-center justify-center gap-3 px-8 py-4 bg-veralya-green text-white font-body font-medium rounded-full hover:bg-veralya-dark transition-all duration-300 shadow-lg hover:shadow-xl"
             >
-              Agenda tu diagnóstico gratuito
+              Agenda tu consultoría gratuita
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
@@ -216,7 +214,7 @@ const Soluciones = () => {
         </div>
       </section>
 
-      {/* DISC Section */}
+      {/* Nuestro método Section */}
       <section className="py-24 lg:py-32 bg-veralya-light/30">
         <div className="w-full px-6 lg:px-12">
           <div className="max-w-6xl mx-auto">
@@ -225,7 +223,7 @@ const Soluciones = () => {
                 La Clave para Equipos de Alto Rendimiento
               </span>
               <h2 className="reveal-element font-display text-4xl lg:text-5xl font-semibold text-veralya-dark mb-6">
-                DISC + <span className="text-veralya-green">Fuerzas Impulsoras</span>
+                Nuestro método + <span className="text-veralya-green">Motivadores</span>
               </h2>
               <p className="reveal-element font-body text-lg text-gray-600">
                 Convierte el potencial de tu equipo en resultados reales con la combinación
@@ -239,7 +237,7 @@ const Soluciones = () => {
                   ¿Qué conseguimos?
                 </h3>
                 <div className="space-y-4 mb-8">
-                  {discFeatures.map((feature, index) => (
+                  {methodFeatures.map((feature, index) => (
                     <div
                       key={index}
                       className="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm"

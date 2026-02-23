@@ -44,11 +44,10 @@ const Navigation = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
             ? 'bg-white/90 backdrop-blur-lg shadow-lg py-3'
             : 'bg-transparent py-6'
-        }`}
+          }`}
       >
         <div className="w-full px-6 lg:px-12 flex items-center justify-between">
           {/* Logo */}
@@ -64,9 +63,8 @@ const Navigation = () => {
               <span className="text-white font-display font-bold text-lg">V</span>
             </div>
             <span
-              className={`font-display font-semibold text-xl transition-colors duration-300 ${
-                isScrolled ? 'text-veralya-dark' : 'text-veralya-dark'
-              }`}
+              className={`font-display font-semibold text-xl transition-colors duration-300 ${isScrolled ? 'text-veralya-dark' : 'text-veralya-dark'
+                }`}
             >
               Veralya
             </span>
@@ -78,11 +76,10 @@ const Navigation = () => {
               <button
                 key={link.href}
                 onClick={() => scrollToSection(link.href)}
-                className={`nav-item underline-anim font-body text-sm font-medium transition-colors duration-300 ${
-                  isScrolled
+                className={`nav-item underline-anim font-body text-sm font-medium transition-colors duration-300 ${isScrolled
                     ? 'text-gray-700 hover:text-veralya-green'
                     : 'text-gray-700 hover:text-veralya-green'
-                }`}
+                  }`}
               >
                 {link.label}
               </button>
@@ -95,7 +92,7 @@ const Navigation = () => {
               onClick={() => scrollToSection('#contacto')}
               className="magnetic-btn px-6 py-3 bg-veralya-green text-white font-body text-sm font-medium rounded-full hover:bg-veralya-dark transition-colors duration-300 shadow-lg hover:shadow-xl"
             >
-              Agenda tu diagnóstico
+              Agenda tu consultoría gratuita
             </button>
           </div>
 
@@ -115,9 +112,8 @@ const Navigation = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed inset-0 z-40 bg-white transition-transform duration-500 lg:hidden ${
-          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        className={`fixed inset-0 z-40 bg-white transition-transform duration-500 lg:hidden ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
       >
         <div className="flex flex-col items-center justify-center h-full gap-8">
           {navLinks.map((link, index) => (
@@ -134,7 +130,7 @@ const Navigation = () => {
             onClick={() => scrollToSection('#contacto')}
             className="mt-8 px-8 py-4 bg-veralya-green text-white font-body font-medium rounded-full"
           >
-            Agenda tu diagnóstico
+            Agenda tu consultoría gratuita
           </button>
         </div>
       </div>

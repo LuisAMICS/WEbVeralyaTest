@@ -43,7 +43,7 @@ const CTA = () => {
 
   const benefits = [
     'Primera sesión de consultoría gratuita',
-    'Diagnóstico inicial sin compromiso',
+    'Análisis inicial sin compromiso',
     'Propuesta personalizada en 48h',
     'Acompañamiento continuo garantizado',
   ];
@@ -89,7 +89,7 @@ const CTA = () => {
           </h2>
 
           <p className="font-body text-xl text-white/80 mb-10 max-w-2xl mx-auto">
-            Empecemos a activarlo hoy. Agenda tu diagnóstico gratuito y descubre 
+            Empecemos a activarlo hoy. Agenda tu consultoría gratuita y descubre
             el potencial oculto de tu organización.
           </p>
 
@@ -112,7 +112,7 @@ const CTA = () => {
               onClick={() => setIsDialogOpen(true)}
               className="magnetic-btn group inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-veralya-dark font-body font-medium rounded-full hover:bg-veralya-accent transition-colors duration-300 shadow-lg"
             >
-              Agenda tu diagnóstico gratuito
+              Agenda tu consultoría gratuita
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
             <a
@@ -131,9 +131,9 @@ const CTA = () => {
             <div className="flex flex-wrap justify-center items-center gap-6">
               <span className="text-white/40 font-body text-sm">TTI Success Insights</span>
               <span className="text-white/20">•</span>
-              <span className="text-white/40 font-body text-sm">DISC Certificado</span>
+              <span className="text-white/40 font-body text-sm">Análisis Conductual</span>
               <span className="text-white/20">•</span>
-              <span className="text-white/40 font-body text-sm">Fuerzas Impulsoras</span>
+              <span className="text-white/40 font-body text-sm">Motivadores</span>
               <span className="text-white/20">•</span>
               <span className="text-white/40 font-body text-sm">PNL Practitioner</span>
             </div>
@@ -146,7 +146,7 @@ const CTA = () => {
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle className="font-display text-2xl text-veralya-dark">
-              Solicitar diagnóstico gratuito
+              Solicitar consultoría gratuita
             </DialogTitle>
             <DialogDescription className="font-body text-gray-600">
               Déjanos tus datos y nos pondremos en contacto contigo en menos de 24 horas.

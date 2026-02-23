@@ -10,27 +10,27 @@ const Testimonials = () => {
 
   const testimonials = [
     {
-      name: 'Laura G.',
-      role: 'CEO de startup de software educativo',
+      name: 'Dirección General',
+      role: 'Sector Tecnológico',
       location: 'Madrid',
       image: '/testimonial-1.jpg',
       quote:
-        'Estábamos desbordados, cada uno tirando en una dirección. El diagnóstico DISC nos hizo ver lo que no queríamos enfrentar: falta de roles claros, comunicación pobre y desgaste. En dos semanas con Veralya, teníamos foco, estructura y un equipo que por fin respiraba en sincronía.',
+        'Estábamos desbordados, cada uno tirando en una dirección. El análisis nos hizo ver lo que no queríamos enfrentar: falta de roles claros, comunicación pobre y desgaste. En poco tiempo con Veralya, teníamos foco, estructura y un equipo que por fin respiraba en sincronía.',
       rating: 5,
     },
     {
-      name: 'Antonia R.',
-      role: 'Directora Comercial',
+      name: 'Dirección Comercial',
+      role: 'Sector Servicios',
       location: 'Valencia',
       image: '/testimonial-2.jpg',
       quote:
-        'He dirigido equipos comerciales toda mi vida, pero nunca había visto una herramienta que revelara tanto en tan poco tiempo. Gracias al método DISC y a la sesión de feedback con Veralya, entendí por qué algunos de mis mejores vendedores estaban desmotivados. Ahora trabajamos en armonía… y vendemos más.',
+        'He dirigido equipos comerciales toda mi vida, pero nunca había visto una herramienta que revelara tanto en tan poco tiempo. Gracias a nuestro método y a la sesión de feedback con Veralya, entendí por qué algunos de mis mejores vendedores estaban desmotivados. Ahora trabajamos en armonía… y vendemos más.',
       rating: 5,
     },
     {
-      name: 'Miriam Gianonatti',
-      role: 'Responsable de equipo',
-      location: 'ONG, Barcelona',
+      name: 'Responsable de RRHH',
+      role: 'Sector Social',
+      location: 'Barcelona',
       image: '/testimonial-3.jpg',
       quote:
         'Pensaba que necesitábamos más formación, pero lo que realmente nos faltaba era comprendernos. Veralya nos ayudó a traducir nuestras diferencias en fortalezas. Hoy no solo trabajamos mejor, también nos sentimos mejor como equipo.',
@@ -126,9 +126,8 @@ const Testimonials = () => {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className={`testimonial-column testimonial-card ${
-                index === 1 ? 'lg:mt-10' : index === 2 ? 'lg:mt-20' : ''
-              }`}
+              className={`testimonial-column testimonial-card ${index === 1 ? 'lg:mt-10' : index === 2 ? 'lg:mt-20' : ''
+                }`}
             >
               <div className="glass-card rounded-2xl p-6 lg:p-8 h-full hover:shadow-xl transition-shadow duration-300">
                 {/* Quote icon */}
