@@ -84,12 +84,14 @@ const Navigation = () => {
 
           {/* CTA Button */}
           <div className="hidden lg:block nav-item">
-            <button
-              onClick={() => scrollToSection('#contacto')}
+            <a
+              href="https://wa.me/34646181150?text=Hola%2C%20me%20gustar%C3%ADa%20solicitar%20m%C3%A1s%20informaci%C3%B3n%20sobre%20vuestros%20servicios"
+              target="_blank"
+              rel="noopener noreferrer"
               className="magnetic-btn px-6 py-3 bg-veralya-green text-white font-body text-sm font-medium rounded-full hover:bg-veralya-dark transition-colors duration-300 shadow-lg hover:shadow-xl"
             >
               Agenda tu consultoría gratuita
-            </button>
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -122,12 +124,14 @@ const Navigation = () => {
               {link.label}
             </button>
           ))}
-          <button
-            onClick={() => scrollToSection('#contacto')}
+          <a
+            href="https://wa.me/34646181150?text=Hola%2C%20me%20gustar%C3%ADa%20solicitar%20m%C3%A1s%20informaci%C3%B3n%20sobre%20vuestros%20servicios"
+            target="_blank"
+            rel="noopener noreferrer"
             className="mt-8 px-8 py-4 bg-veralya-green text-white font-body font-medium rounded-full"
           >
             Agenda tu consultoría gratuita
-          </button>
+          </a>
         </div>
       </div>
     </>

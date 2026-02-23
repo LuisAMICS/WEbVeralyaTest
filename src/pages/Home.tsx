@@ -163,13 +163,15 @@ const Home = () => {
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link
-                  to="/contacto"
+                <a
+                  href="https://wa.me/34646181150?text=Hola%2C%20me%20gustar%C3%ADa%20solicitar%20m%C3%A1s%20informaci%C3%B3n%20sobre%20vuestros%20servicios"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="magnetic-btn group inline-flex items-center justify-center gap-3 px-8 py-4 bg-veralya-green text-white font-body font-medium rounded-full hover:bg-veralya-dark transition-all duration-300 shadow-lg hover:shadow-xl"
                 >
                   Agenda tu consultoría gratuita
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
+                </a>
                 <Link
                   to="/soluciones"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-veralya-green text-veralya-green font-body font-medium rounded-full hover:bg-veralya-green hover:text-white transition-all duration-300"
@@ -467,13 +469,15 @@ const Home = () => {
               ))}
             </div>
 
-            <Link
-              to="/contacto"
+            <a
+              href="https://wa.me/34646181150?text=Hola%2C%20me%20gustar%C3%ADa%20solicitar%20m%C3%A1s%20informaci%C3%B3n%20sobre%20vuestros%20servicios"
+              target="_blank"
+              rel="noopener noreferrer"
               className="magnetic-btn group inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-veralya-dark font-body font-medium rounded-full hover:bg-veralya-accent transition-colors duration-300 shadow-lg"
             >
               Agenda tu consultoría gratuita
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
+            </a>
           </div>
         </div>
       </section>

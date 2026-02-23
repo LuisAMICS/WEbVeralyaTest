@@ -177,9 +177,9 @@ function App() {
             ))}
           </div>
 
-          <button onClick={() => scrollToSection('contacto')} className="hidden lg:block px-6 py-3 bg-veralya-green text-white font-body text-sm font-medium rounded-full hover:bg-veralya-dark transition-colors shadow-lg">
+          <a href="https://wa.me/34646181150?text=Hola%2C%20me%20gustar%C3%ADa%20solicitar%20m%C3%A1s%20informaci%C3%B3n%20sobre%20vuestros%20servicios" target="_blank" rel="noopener noreferrer" className="hidden lg:block px-6 py-3 bg-veralya-green text-white font-body text-sm font-medium rounded-full hover:bg-veralya-dark transition-colors shadow-lg">
             Agenda tu consultoría gratuita
-          </button>
+          </a>
 
           <button className="lg:hidden p-2" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
             {isMobileMenuOpen ? <X className="w-6 h-6 text-veralya-dark" /> : <Menu className="w-6 h-6 text-veralya-dark" />}
@@ -196,9 +196,9 @@ function App() {
                 {link.label}
               </button>
             ))}
-            <button onClick={() => scrollToSection('contacto')} className="mt-8 px-8 py-4 bg-veralya-green text-white font-body font-medium rounded-full">
+            <a href="https://wa.me/34646181150?text=Hola%2C%20me%20gustar%C3%ADa%20solicitar%20m%C3%A1s%20informaci%C3%B3n%20sobre%20vuestros%20servicios" target="_blank" rel="noopener noreferrer" className="mt-8 px-8 py-4 bg-veralya-green text-white font-body font-medium rounded-full">
               Agenda tu consultoría gratuita
-            </button>
+            </a>
           </div>
         </div>
       )}
@@ -643,7 +643,7 @@ function App() {
                 ))}
               </div>
 
-              <a href="#contacto" className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-veralya-dark font-body font-medium rounded-full hover:bg-veralya-accent transition-colors shadow-lg">
+              <a href="https://wa.me/34646181150?text=Hola%2C%20me%20gustar%C3%ADa%20solicitar%20m%C3%A1s%20informaci%C3%B3n%20sobre%20vuestros%20servicios" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-veralya-dark font-body font-medium rounded-full hover:bg-veralya-accent transition-colors shadow-lg">
                 Agenda tu consultoría gratuita
                 <ArrowRight className="w-5 h-5" />
               </a>

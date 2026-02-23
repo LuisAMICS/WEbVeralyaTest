@@ -151,13 +151,15 @@ const Soluciones = () => {
               a desarrollar equipos que rinden más, con menos fricciones, gracias a herramientas
               con nuestro método, coaching ejecutivo y PNL.
             </p>
-            <Link
-              to="/contacto"
+            <a
+              href="https://wa.me/34646181150?text=Hola%2C%20me%20gustar%C3%ADa%20solicitar%20m%C3%A1s%20informaci%C3%B3n%20sobre%20vuestros%20servicios"
+              target="_blank"
+              rel="noopener noreferrer"
               className="reveal-element magnetic-btn group inline-flex items-center justify-center gap-3 px-8 py-4 bg-veralya-green text-white font-body font-medium rounded-full hover:bg-veralya-dark transition-all duration-300 shadow-lg hover:shadow-xl"
             >
               Agenda tu consultoría gratuita
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
+            </a>
           </div>
         </div>
       </section>
