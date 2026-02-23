@@ -45,29 +45,25 @@ const Navigation = () => {
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
-            ? 'bg-white/90 backdrop-blur-lg shadow-lg py-3'
-            : 'bg-transparent py-6'
+          ? 'bg-white/90 backdrop-blur-lg shadow-lg py-3'
+          : 'bg-transparent py-6'
           }`}
       >
         <div className="w-full px-6 lg:px-12 flex items-center justify-between">
           {/* Logo */}
           <a
             href="#"
-            className="nav-item flex items-center gap-2 group"
+            className="nav-item flex items-center group"
             onClick={(e) => {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
           >
-            <div className="w-10 h-10 rounded-full bg-veralya-green flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <span className="text-white font-display font-bold text-lg">V</span>
-            </div>
-            <span
-              className={`font-display font-semibold text-xl transition-colors duration-300 ${isScrolled ? 'text-veralya-dark' : 'text-veralya-dark'
-                }`}
-            >
-              Veralya
-            </span>
+            <img
+              src="/WEbVeralyaTest/veralya-logo-new.png"
+              alt="Veralya"
+              className="h-10 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
+            />
           </a>
 
           {/* Desktop Navigation */}
@@ -77,8 +73,8 @@ const Navigation = () => {
                 key={link.href}
                 onClick={() => scrollToSection(link.href)}
                 className={`nav-item underline-anim font-body text-sm font-medium transition-colors duration-300 ${isScrolled
-                    ? 'text-gray-700 hover:text-veralya-green'
-                    : 'text-gray-700 hover:text-veralya-green'
+                  ? 'text-gray-700 hover:text-veralya-green'
+                  : 'text-gray-700 hover:text-veralya-green'
                   }`}
               >
                 {link.label}

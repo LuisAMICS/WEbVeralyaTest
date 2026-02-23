@@ -53,17 +53,13 @@ const MainLayout = () => {
           {/* Logo */}
           <Link
             to="/"
-            className="nav-item flex items-center gap-2 group"
+            className="nav-item flex items-center group"
           >
-            <div className="w-10 h-10 rounded-full bg-veralya-green flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <span className="text-white font-display font-bold text-lg">V</span>
-            </div>
-            <span
-              className={`font-display font-semibold text-xl transition-colors duration-300 ${isScrolled ? 'text-veralya-dark' : 'text-veralya-dark'
-                }`}
-            >
-              Veralya
-            </span>
+            <img
+              src="/WEbVeralyaTest/veralya-logo-new.png"
+              alt="Veralya"
+              className="h-10 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
+            />
           </Link>
 
           {/* Desktop Navigation */}

@@ -319,7 +319,7 @@ const Contacto = () => {
                   ))}
                 </div>
 
-                {/* Calendly CTA */}
+                {/* WhatsApp CTA */}
                 <div className="bg-gradient-to-r from-veralya-green to-veralya-emerald rounded-2xl p-8 text-white">
                   <div className="flex items-center gap-3 mb-4">
                     <Calendar className="w-8 h-8" />
@@ -332,7 +332,7 @@ const Contacto = () => {
                     Primera sesión de consultoría gratuita.
                   </p>
                   <a
-                    href="https://calendly.com/descubre-veralyaconsulting"
+                    href="https://wa.me/34646181150?text=Hola%2C%20me%20gustar%C3%ADa%20solicitar%20m%C3%A1s%20informaci%C3%B3n%20sobre%20vuestros%20servicios"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-6 py-3 bg-white text-veralya-dark font-body font-medium rounded-full hover:bg-veralya-accent transition-colors duration-300"
@@ -377,7 +377,7 @@ const Contacto = () => {
 
             <div className="flex flex-wrap justify-center gap-4">
               <a
-                href="https://calendly.com/descubre-veralyaconsulting"
+                href="https://wa.me/34646181150?text=Hola%2C%20me%20gustar%C3%ADa%20solicitar%20m%C3%A1s%20informaci%C3%B3n%20sobre%20vuestros%20servicios"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 px-8 py-4 bg-white text-veralya-dark font-body font-medium rounded-full hover:bg-veralya-accent transition-colors duration-300 shadow-lg"
