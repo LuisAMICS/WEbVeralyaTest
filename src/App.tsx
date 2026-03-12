@@ -998,7 +998,7 @@ function App() {
       <footer id="contacto" className="bg-veralya-dark text-white pt-32 pb-12 relative overflow-hidden">
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         
-        <div className="w-full px-6 lg:px-12 relative z-10">
+        <div className="w-full px-6 lg:px-12 relative z-10 pb-20">
           <div className="max-w-7xl mx-auto">
               <div className="reveal-section flex flex-col items-start lg:items-center text-center lg:text-left">
                 <div className="mb-10 flex items-center gap-3">
@@ -1021,7 +1021,7 @@ function App() {
                 </a>
 
                 {/* Decorative TTI Shield positioned below contact */}
-                <div className="mt-16 opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+                <div className="mt-24 opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
                    <img src={getAssetPath("tti-seal.jpg")} alt="TTI Success Insights Certified" className="h-28" />
                 </div>
               </div>
