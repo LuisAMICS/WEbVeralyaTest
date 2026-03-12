@@ -93,8 +93,8 @@ function App() {
         );
       }
 
-      // Image reveal with refined clipPath and mask
-      gsap.fromTo(imageRef.current,
+      // Image reveal with refined clipPath and mask - targeting the container specifically
+      gsap.fromTo('.hero-image-container',
         { clipPath: 'inset(10% 10% 10% 10% round 100px)', scale: 1.1, opacity: 0 },
         { clipPath: 'inset(0% 0% 0% 0% round 40px)', scale: 1, opacity: 1, duration: 1.8, ease: 'expo.out', delay: 0.3 }
       );
@@ -400,13 +400,13 @@ function App() {
                 </div>
               </div>
 
-              <div className="order-1 lg:order-2 relative">
-                <div ref={imageRef} className="relative">
-                  <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+              <div className="order-1 lg:order-2 relative overflow-visible">
+                <div ref={imageRef} className="relative z-10">
+                  <div className="hero-image-container relative rounded-3xl overflow-hidden shadow-2xl">
                     <img src={getAssetPath("hero-image.jpg")} alt="Equipo colaborando" className="w-full h-auto object-cover mask-image-fade" />
                     <div className="absolute inset-0 bg-gradient-to-t from-veralya-dark/20 to-transparent" />
                   </div>
-                  <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-5 shadow-xl floating">
+                  <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-5 shadow-xl floating z-20">
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 rounded-full bg-veralya-light flex items-center justify-center">
                         <span className="text-2xl">🎯</span>
@@ -417,7 +417,7 @@ function App() {
                       </div>
                     </div>
                   </div>
-                  <div className="absolute -top-4 -right-4 bg-veralya-green text-white rounded-2xl p-4 shadow-xl" style={{ animation: 'float 5s ease-in-out infinite 1s' }}>
+                  <div className="absolute -top-4 -right-4 bg-veralya-green text-white rounded-2xl p-4 shadow-xl z-20" style={{ animation: 'float 5s ease-in-out infinite 1s' }}>
                     <div className="font-display font-bold text-2xl">+37%</div>
                     <div className="font-body text-xs opacity-90">Productividad</div>
                   </div>
@@ -1055,7 +1055,7 @@ function App() {
                 </div>
                 {/* Decorative TTI Shield */}
                 <div className="mt-12 flex justify-end">
-                   <img src={getAssetPath("tti-certified.png")} alt="TTI Success Insights Certified" className="h-24 opacity-40 hover:opacity-100 transition-opacity grayscale hover:grayscale-0" />
+                   <img src={getAssetPath("tti-seal.jpg")} alt="TTI Success Insights Certified" className="h-24 opacity-40 hover:opacity-100 transition-opacity grayscale hover:grayscale-0" />
                 </div>
               </div>
             </div>
