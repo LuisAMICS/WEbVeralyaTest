@@ -47,11 +47,7 @@ const LogoCarousel = () => {
       ref={sectionRef}
       className="py-16 bg-white overflow-hidden border-y border-gray-100"
     >
-      <div className="w-full px-6 lg:px-12 mb-8">
-        <p className="text-center font-body text-sm text-gray-500 uppercase tracking-wider">
-          Empresas que han confiado en nosotros
-        </p>
-      </div>
+
 
       {/* Infinite scroll carousel */}
       <div className="relative">

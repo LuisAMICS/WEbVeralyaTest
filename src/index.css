@@ -78,23 +78,6 @@
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
   }
 
-  .custom-cursor {
-    width: 20px;
-    height: 20px;
-    background: #7ec2b0;
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 10000;
-    mix-blend-mode: difference;
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
-  }
-
-  .custom-cursor.active {
-    transform: scale(4);
-    background: white;
-  }
-
   .mask-image-fade {
     mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
   }
