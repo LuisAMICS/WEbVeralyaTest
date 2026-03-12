@@ -4,7 +4,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, Sparkles, CheckCircle, Menu, X, BookOpen, Award, Linkedin, Mail } from 'lucide-react';
 import Lenis from '@studio-freight/lenis';
 import SplitType from 'split-type';
-import LogoCarousel from './sections/LogoCarousel';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -17,13 +16,10 @@ const getAssetPath = (path: string) => {
 function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
-  const [isCursorActive, setIsCursorActive] = useState(false);
   const [expandedProgram, setExpandedProgram] = useState<string | null>(null);
   const heroRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
-  const cursorRef = useRef<HTMLDivElement>(null);
 
   const lenisRef = useRef<Lenis | null>(null);
 
@@ -54,20 +50,8 @@ function App() {
 
     lenis.on('scroll', handleScroll);
 
-    // Mouse move for custom cursor
-    const handleMouseMove = (e: MouseEvent) => {
-      setCursorPos({ x: e.clientX, y: e.clientY });
-      
-      const target = e.target as HTMLElement;
-      const isInteractive = target.closest('button, a, input, [role="button"]');
-      setIsCursorActive(!!isInteractive);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-
     return () => {
       gsap.ticker.remove(update);
-      window.removeEventListener('mousemove', handleMouseMove);
       lenis.destroy();
     };
   }, []);
@@ -221,16 +205,7 @@ function App() {
   };
 
   return (
-    <div className="grain-bg cursor-none min-h-screen">
-      <div 
-        ref={cursorRef}
-        className={`custom-cursor hidden lg:block ${isCursorActive ? 'active' : ''}`}
-        style={{ 
-          left: `${cursorPos.x}px`, 
-          top: `${cursorPos.y}px`,
-          transform: `translate(-50%, -50%) ${isCursorActive ? 'scale(4)' : 'scale(1)'}`
-        }}
-      />
+    <div className="grain-bg min-h-screen">
       {/* Program Detail Modal */}
       {expandedProgram && programDetails[expandedProgram] && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 lg:p-8 animate-in fade-in duration-500">
@@ -427,10 +402,9 @@ function App() {
           </div>
         </section>
         
-        <LogoCarousel />
-
-
-
+        
+        
+        
         {/* Método Veralya 5D Section - Premium Redesign */}
         <section id="metodo-5d" className="py-24 lg:py-40 bg-white relative overflow-hidden">
           {/* Decorative Elements */}
@@ -572,12 +546,12 @@ function App() {
           <div className="w-full px-6 lg:px-12">
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-16">
-                <span className="reveal-section inline-block px-4 py-2 bg-veralya-light rounded-full text-veralya-green font-body text-sm font-medium mb-6">Resultados y Aprendizajes</span>
+                <span className="reveal-section inline-block px-4 py-2 bg-veralya-light rounded-full text-veralya-green font-body text-sm font-medium mb-6">Capacitación Estratégica</span>
                 <h2 className="reveal-section font-display text-4xl lg:text-5xl font-semibold text-veralya-dark mb-6">
-                  Impacto <span className="text-veralya-green">Medible</span>
+                  Formaciones y desarrollo profesional <span className="text-veralya-green">in-company</span>
                 </h2>
                 <p className="reveal-section font-body text-lg text-gray-600 max-w-2xl mx-auto">
-                  Estudios vinculados a intervenciones estructuradas de liderazgo y equipos basadas en diagnóstico conductual reflejan resultados reales en la organización.
+                  Programas prácticos y personalizados diseñados para fortalecer las competencias críticas de tus equipos, con un enfoque directo en la aplicación inmediata y resultados sostenibles.
                 </p>
               </div>
 
