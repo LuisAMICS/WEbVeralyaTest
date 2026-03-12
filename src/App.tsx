@@ -1,8 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight, Sparkles, Quote, Star, CheckCircle, Menu, X, ChevronDown, BookOpen, Award, Linkedin, Mail } from 'lucide-react';
-import { useState } from 'react';
+import { ArrowRight, Sparkles, CheckCircle, Menu, X, BookOpen, Award, Linkedin, Mail } from 'lucide-react';
+import Lenis from '@studio-freight/lenis';
+import SplitType from 'split-type';
+import LogoCarousel from './sections/LogoCarousel';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,34 +17,91 @@ const getAssetPath = (path: string) => {
 function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeService, setActiveService] = useState<number | null>(0);
+  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+  const [isCursorActive, setIsCursorActive] = useState(false);
+  const [expandedProgram, setExpandedProgram] = useState<string | null>(null);
   const heroRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
+  const cursorRef = useRef<HTMLDivElement>(null);
+
+  const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1.1,
+      touchMultiplier: 1.5,
+    });
+
+    lenisRef.current = lenis;
+
+    // Integration with GSAP Ticker for better efficiency
+    function update(time: number) {
+      lenis.raf(time * 1000);
+    }
+
+    gsap.ticker.add(update);
+    gsap.ticker.lagSmoothing(0);
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 100);
     };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    lenis.on('scroll', handleScroll);
+
+    // Mouse move for custom cursor
+    const handleMouseMove = (e: MouseEvent) => {
+      setCursorPos({ x: e.clientX, y: e.clientY });
+      
+      const target = e.target as HTMLElement;
+      const isInteractive = target.closest('button, a, input, [role="button"]');
+      setIsCursorActive(!!isInteractive);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+
+    return () => {
+      gsap.ticker.remove(update);
+      window.removeEventListener('mousemove', handleMouseMove);
+      lenis.destroy();
+    };
   }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Title animation
-      const words = titleRef.current?.querySelectorAll('.word');
-      if (words) {
-        gsap.fromTo(words, { y: 100, opacity: 0 }, {
-          y: 0, opacity: 1, duration: 1.2, stagger: 0.15, ease: 'power4.out', delay: 0.3
-        });
+      // Split text for hero title
+      if (titleRef.current) {
+        const split = new SplitType(titleRef.current, { types: 'words,chars' });
+        
+        gsap.fromTo(split.chars, 
+          { y: 100, opacity: 0, scale: 0.8, filter: 'blur(10px)' },
+          { 
+            y: 0, 
+            opacity: 1, 
+            scale: 1,
+            filter: 'blur(0px)',
+            duration: 1.2, 
+            stagger: 0.03, 
+            ease: 'expo.out', 
+            delay: 0.5 
+          }
+        );
       }
 
-      // Image reveal
-      gsap.fromTo(imageRef.current,
-        { clipPath: 'circle(0% at 50% 50%)', scale: 1.2 },
-        { clipPath: 'ellipse(75% 90% at 60% 50%)', scale: 1, duration: 1.5, ease: 'power4.out', delay: 0.2 }
+      // Image reveal with refined clipPath and mask - targeting the container specifically
+      gsap.fromTo('.hero-image-container',
+        { clipPath: 'inset(10% 10% 10% 10% round 100px)', scale: 1.1, opacity: 0 },
+        { clipPath: 'inset(0% 0% 0% 0% round 40px)', scale: 1, opacity: 1, duration: 1.8, ease: 'expo.out', delay: 0.3 }
       );
+
+      // Hero content animations
+      gsap.fromTo('.hero-text', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 1.2 });
+      gsap.fromTo('.hero-buttons', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 1.4 });
 
       // Parallax on scroll
       gsap.to(imageRef.current, {
@@ -56,11 +115,26 @@ function App() {
         scrollTrigger: { trigger: heroRef.current, start: 'top top', end: '50% top', scrub: true }
       });
 
+      // Program images parallax
+      gsap.utils.toArray<HTMLElement>('.program-image-container').forEach((container) => {
+        const image = container.querySelector('img');
+        gsap.to(image, {
+          y: '20%',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: container,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true
+          }
+        });
+      });
+
       // Scroll animations
       gsap.utils.toArray<HTMLElement>('.reveal-section').forEach((section) => {
         gsap.fromTo(section, { y: 60, opacity: 0 }, {
-          y: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
-          scrollTrigger: { trigger: section, start: 'top 80%', toggleActions: 'play none none reverse' }
+          y: 0, opacity: 1, duration: 1, ease: 'expo.out',
+          scrollTrigger: { trigger: section, start: 'top 85%', toggleActions: 'play none none reverse' }
         });
       });
     }, heroRef);
@@ -68,100 +142,169 @@ function App() {
     return () => ctx.revert();
   }, []);
 
+  useEffect(() => {
+    if (expandedProgram) {
+      document.body.style.overflow = 'hidden';
+      gsap.fromTo('.modal-content', 
+        { y: 100, opacity: 0, scale: 0.9 },
+        { y: 0, opacity: 1, scale: 1, duration: 0.6, ease: 'expo.out' }
+      );
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [expandedProgram]);
+
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(`#${id}`, { offset: -80 });
       setIsMobileMenuOpen(false);
+    } else {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'auto' });
+        setIsMobileMenuOpen(false);
+      }
     }
   };
 
-  const services = [
-    {
-      title: 'Evaluación conductual + Motivadores (TTI)',
-      subtitle: 'El análisis que transforma equipos',
-      description: 'Identifica cómo actúa cada miembro del equipo y qué le motiva realmente. Mejora la comunicación y reduce fricciones internas.',
-      benefits: ['Perfil individualizado completo', 'Feedback personalizado'],
-      features: ['Análisis conductual', 'Motivadores', 'Perfil integrado', 'Comparativa de perfiles']
-    },
-    {
-      title: 'Programa LAE N1 - Liderazgo',
-      subtitle: 'Autoconocimiento del líder',
-      description: 'Descubre las dimensiones ocultas de tu estilo de liderazgo mediante herramientas científicamente validadas.',
-      benefits: ['Liderazgo en base al estilo propio', 'Comprensión de fortalezas y áreas de mejora', 'Plan de acción SMART', 'Resultados medibles', 'Mayor consciencia del impacto'],
-      features: ['Comprensión de perfiles conductuales y motivacionales', 'Modelo O.S.A.R', 'Trabajo en dimensiones del liderazgo', 'Análisis completo']
-    },
-    {
-      title: 'Programa LAE N2 - Adaptativo',
-      subtitle: 'Adaptación del líder al equipo',
-      description: 'Potencia tus habilidades para identificar estilos conductuales y motivacionales en colaboradores y adaptar tu enfoque para maximizar el potencial.',
-      benefits: ['Mejora en comunicación', 'Reducción de conflictos', 'Más compromiso', 'Adaptabilidad'],
-      features: ['Comunicación efectiva', 'Gestión de conflictos', 'Escucha generativa', 'Preguntas poderosas']
-    },
-    {
-      title: 'Programa EAR - Equipos',
-      subtitle: 'Equipos de Alto Rendimiento',
-      description: 'Transforma equipos convencionales en equipos de alto rendimiento mediante autoconocimiento y principios sistémicos.',
-      benefits: ['Más productividad', 'Mejor satisfacción', 'ROI positivo', 'Visión sistémica del equipo'],
-      features: ['Visión sistémica del equipo', 'Superación piloto automático', 'Módulos de trabajo e integración progresiva', 'Seguimiento continuo']
-    },
-    {
-      title: 'Selección Estratégica',
-      subtitle: 'Encuentra el talento ideal',
-      description: 'Proceso estructurado para encontrar al candidato perfecto para tu organización.',
-      benefits: ['Precisión científica', 'Ahorro de tiempo', 'Reducción de riesgo', 'Acompañamiento completo'],
-      features: ['Consultoría sin compromiso', 'Definición Perfil conductual ideal', 'Talent Comparison Report', 'Candidatos finalistas']
-    }
-  ];
-
-  const discProfiles = [
-    { letter: 'D', name: 'Dominancia', desc: 'Resultados, decisión, acción', color: 'bg-veralya-green', textColor: 'text-white' },
-    { letter: 'I', name: 'Influencia', desc: 'Comunicación, entusiasmo, personas', color: 'bg-veralya-dark', textColor: 'text-white' },
-    { letter: 'S', name: 'Estabilidad', desc: 'Paciencia, apoyo, persistencia', color: 'bg-veralya-accent', textColor: 'text-veralya-dark' },
-    { letter: 'C', name: 'Cumplimiento', desc: 'Precisión, calidad, análisis', color: 'bg-veralya-nude', textColor: 'text-veralya-dark' }
-  ];
-
-  const motivators = [
-    { name: 'Teórico', desc: 'Conocimiento y verdad' },
-    { name: 'Utilitario', desc: 'Resultados prácticos' },
-    { name: 'Estético', desc: 'Armonía y belleza' },
-    { name: 'Social', desc: 'Ayudar a otros' },
-    { name: 'Individualista', desc: 'Autonomía y poder' },
-    { name: 'Tradicional', desc: 'Orden y estructura' }
-  ];
-
-  const testimonials = [
-    {
-      name: 'Cliente (Sector Tecnológico)',
-      role: 'CEO',
-      location: 'Madrid',
-      quote: 'Estábamos desbordados, cada uno tirando en una dirección. El análisis nos hizo ver lo que no queríamos enfrentar: falta de roles claros, comunicación pobre y desgaste. En poco tiempo con Veralya, teníamos foco, estructura y un equipo que por fin respiraba en sincronía.'
-    },
-    {
-      name: 'Cliente (Sector Comercial)',
-      role: 'Directora Comercial',
-      location: 'Valencia',
-      quote: 'He dirigido equipos comerciales toda mi vida, pero nunca había visto una herramienta que revelara tanto en tan poco tiempo. Gracias a nuestro método y a la sesión de feedback con Veralya, entendí por qué algunos de mis mejores vendedores estaban desmotivados.'
-    },
-    {
-      name: 'Cliente (Responsable de Equipo)',
-      role: 'Manager',
-      location: 'Barcelona',
-      quote: 'Pensaba que necesitábamos más formación, pero lo que realmente nos faltaba era comprendernos. Veralya nos ayudó a traducir nuestras diferencias en fortalezas. Hoy no solo trabajamos mejor, también nos sentimos mejor como equipo.'
-    }
-  ];
-
   const navLinks = [
-    { id: 'disc', label: 'Nuestro método' },
-    { id: 'servicios', label: 'Servicios' },
+    { id: 'metodo-5d', label: 'Método 5D' },
     { id: 'programas', label: 'Programas' },
-    { id: 'equipo', label: 'Equipo' },
-    { id: 'testimonios', label: 'Testimonios' },
-    { id: 'contacto', label: 'Contacto' }
+    { id: 'impacto', label: 'Resultados' },
+    { id: 'nosotros', label: 'Nosotros' },
+    { id: 'contacto', label: 'Contacto' },
   ];
+
+  const programDetails: Record<string, any> = {
+    'lae-n1': {
+      title: 'LAE Nivel 1: Autoconocimiento',
+      subtitle: 'El Origen del Liderazgo Extraordinario',
+      image: 'program-lae1.png',
+      content: 'El nivel 1 del Programa de Liderazgo Estratégico se centra en la base de cualquier éxito directivo: el autoconocimiento profundo. Trabajamos la claridad interna y el liderazgo consciente para generar entornos de mayor compromiso.',
+      modules: [
+        { name: 'Diagnóstico TTI Success Insights', desc: 'Análisis conductual y motivacional estructurado.' },
+        { name: 'Autoconciencia Directiva', desc: 'Claridad interna y gestión emocional para líderes.' },
+        { name: 'Liderazgo Consciente', desc: 'Influencia positiva y ética desde la claridad personal.' },
+        { name: 'Plan de Desarrollo', desc: 'Hoja de ruta estratégica para el crecimiento sostenible.' }
+      ],
+      duration: '12 Horas de acompañamiento',
+      format: 'Presencial / Híbrido'
+    },
+    'lae-n2': {
+      title: 'LAE Nivel 2: Liderazgo Adaptativo',
+      subtitle: 'La Maestría en la Interacción',
+      image: 'program-lae2.png',
+      content: 'El nivel 2 profundiza en el liderazgo adaptativo y la comunicación efectiva. Aprendemos a gestionar equipos con flexibilidad y a integrar el conocimiento práctico en el día a día corporativo.',
+      modules: [
+        { name: 'Liderazgo Adaptativo', desc: 'Flexibilidad y maestría en la interacción profesional.' },
+        { name: 'Comunicación Efectiva', desc: 'Feedback estratégico y escucha activa para equipos.' },
+        { name: 'Gestión Preventiva', desc: 'Solución constructiva de conflictos y tensiones.' },
+        { name: 'Integración Práctica', desc: 'Transferencia directa del conocimiento al rendimiento.' }
+      ],
+      duration: '10 Horas de formación intensiva',
+      format: 'Workshop In-Company'
+    },
+    'ear': {
+      title: 'EAR: Equipos de Alto Rendimiento',
+      subtitle: 'La Metodología Sistémica Definitiva',
+      image: 'program-ear.png',
+      content: 'Convertimos grupos de trabajo en sistemas de alto rendimiento multiplicando resultados y reduciendo fricciones internas mediante una intervención estructurada y estratégica.',
+      modules: [
+        { name: 'Propósito Compartido', desc: 'Alineación de objetivos y visión colectiva del equipo.' },
+        { name: 'Comunicación y Confianza', desc: 'Seguridad psicológica y comunicación transparente.' },
+        { name: 'Gestión del Conflicto', desc: 'Afrontamiento constructivo y coordinación operativa.' },
+        { name: 'Integración Práctica', desc: 'Foco en resultados y ahorro de costes operativos.' }
+      ],
+      duration: 'Programa de acompañamiento estratégico',
+      format: 'Acompañamiento In-Company'
+    }
+  };
 
   return (
-    <div className="grain-overlay">
+    <div className="grain-bg cursor-none min-h-screen">
+      <div 
+        ref={cursorRef}
+        className={`custom-cursor hidden lg:block ${isCursorActive ? 'active' : ''}`}
+        style={{ 
+          left: `${cursorPos.x}px`, 
+          top: `${cursorPos.y}px`,
+          transform: `translate(-50%, -50%) ${isCursorActive ? 'scale(4)' : 'scale(1)'}`
+        }}
+      />
+      {/* Program Detail Modal */}
+      {expandedProgram && programDetails[expandedProgram] && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 lg:p-8 animate-in fade-in duration-500">
+          <div className="absolute inset-0 bg-veralya-dark/95 backdrop-blur-xl" onClick={() => setExpandedProgram(null)} />
+          <div className="modal-content relative w-full max-w-6xl max-h-[90vh] bg-white rounded-[3rem] overflow-hidden shadow-2xl flex flex-col lg:flex-row">
+            <button 
+              onClick={() => setExpandedProgram(null)}
+              className="absolute top-8 right-8 z-20 p-2 bg-gray-100 hover:bg-veralya-green hover:text-white rounded-full transition-all"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            
+            <div className="lg:w-1/2 relative min-h-[300px]">
+              <img 
+                src={getAssetPath(programDetails[expandedProgram].image)} 
+                alt={programDetails[expandedProgram].title} 
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-veralya-dark/80 via-transparent to-transparent lg:bg-gradient-to-r" />
+              <div className="absolute bottom-12 left-12 right-12 text-white">
+                <span className="inline-block px-4 py-1 bg-veralya-accent text-veralya-dark font-display font-bold rounded-full text-sm mb-4">Programa VIP</span>
+                <h3 className="font-display text-4xl lg:text-5xl font-bold mb-2">{programDetails[expandedProgram].title}</h3>
+                <p className="font-body text-xl opacity-80">{programDetails[expandedProgram].subtitle}</p>
+              </div>
+            </div>
+            
+            <div className="lg:w-1/2 p-8 lg:p-16 overflow-y-auto">
+              <div className="flex flex-wrap gap-4 mb-8">
+                <div className="px-4 py-2 bg-gray-100 rounded-2xl flex items-center gap-2">
+                  <span className="text-xs font-body text-gray-500 uppercase tracking-widest leading-none">Duración</span>
+                  <span className="text-sm font-display font-bold text-veralya-dark leading-none">{programDetails[expandedProgram].duration}</span>
+                </div>
+                <div className="px-4 py-2 bg-gray-100 rounded-2xl flex items-center gap-2">
+                  <span className="text-xs font-body text-gray-500 uppercase tracking-widest leading-none">Formato</span>
+                  <span className="text-sm font-display font-bold text-veralya-dark leading-none">{programDetails[expandedProgram].format}</span>
+                </div>
+              </div>
+              
+              <p className="font-body text-lg text-gray-600 leading-relaxed mb-10">
+                {programDetails[expandedProgram].content}
+              </p>
+              
+              <div className="space-y-6 mb-12">
+                <h4 className="font-display text-xl font-bold text-veralya-dark border-b border-gray-100 pb-4">Itinerario del Programa</h4>
+                {programDetails[expandedProgram].modules.map((mod: any, midx: number) => (
+                  <div key={midx} className="flex gap-4">
+                    <div className="w-8 h-8 rounded-full bg-veralya-light flex items-center justify-center flex-shrink-0 text-veralya-green font-display font-bold">
+                      {midx + 1}
+                    </div>
+                    <div>
+                      <div className="font-display font-bold text-veralya-dark mb-1">{mod.name}</div>
+                      <p className="font-body text-sm text-gray-500 leading-relaxed">{mod.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a href="https://wa.me/34646181150" className="flex-1 inline-flex items-center justify-center gap-3 px-8 py-5 bg-veralya-green text-white font-body font-bold rounded-2xl hover:bg-veralya-dark transition-all shadow-lg active:scale-95">
+                  Solicitar Propuesta
+                  <ArrowRight className="w-5 h-5" />
+                </a>
+                <button 
+                  onClick={() => setExpandedProgram(null)}
+                  className="px-8 py-5 border border-gray-200 text-gray-400 font-body font-bold rounded-2xl hover:bg-gray-50 transition-all active:scale-95"
+                >
+                  Cerrar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Navigation */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'bg-white/90 backdrop-blur-lg shadow-lg py-3' : 'bg-transparent py-6'}`}>
         <div className="w-full px-6 lg:px-12 flex items-center justify-between">
@@ -223,18 +366,17 @@ function App() {
                   <span className="word inline-block">Transformamos</span>{' '}
                   <span className="word inline-block text-veralya-green">equipos</span>
                   <br />
-                  <span className="word inline-block">con</span>{' '}
-                  <span className="word inline-block text-veralya-green">nuestro método</span>
+                  <span className="word inline-block">con el</span>{' '}
+                  <span className="word inline-block text-veralya-green">Método Veralya 5D</span>
                 </h1>
 
-                <p className="font-body text-lg lg:text-xl text-gray-600 leading-relaxed mb-10 max-w-xl">
-                  Evaluación conductual, desarrollo de liderazgo y programas de alto rendimiento
-                  basados en nuestro método y Motivadores para empresas que quieren crecer.
+                <p className="hero-text opacity-0 font-body text-lg lg:text-xl text-gray-600 leading-relaxed mb-10 max-w-xl">
+                  Impulsamos el crecimiento empresarial mediante el desarrollo de liderazgo y equipos de alto rendimiento, integrando diagnóstico conductual y motivacional para crear intervenciones alineadas con la realidad y los objetivos de cada organización.
                 </p>
 
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <button onClick={() => scrollToSection('disc')} className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-veralya-green text-white font-body font-medium rounded-full hover:bg-veralya-dark transition-all shadow-lg">
-                    Descubre nuestro método
+                <div className="hero-buttons opacity-0 flex flex-col sm:flex-row gap-4">
+                  <button onClick={() => scrollToSection('metodo-5d')} className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-veralya-green text-white font-body font-medium rounded-full hover:bg-veralya-dark transition-all shadow-lg">
+                    Descubre el Método 5D
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </button>
                   <button onClick={() => scrollToSection('servicios')} className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-veralya-green text-veralya-green font-body font-medium rounded-full hover:bg-veralya-green hover:text-white transition-all">
@@ -258,13 +400,13 @@ function App() {
                 </div>
               </div>
 
-              <div className="order-1 lg:order-2 relative">
-                <div ref={imageRef} className="relative">
-                  <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-                    <img src={getAssetPath("hero-image.jpg")} alt="Equipo colaborando" className="w-full h-auto object-cover" />
+              <div className="order-1 lg:order-2 relative overflow-visible">
+                <div ref={imageRef} className="relative z-10">
+                  <div className="hero-image-container relative rounded-3xl overflow-hidden shadow-2xl">
+                    <img src={getAssetPath("hero-image.jpg")} alt="Equipo colaborando" className="w-full h-auto object-cover mask-image-fade" />
                     <div className="absolute inset-0 bg-gradient-to-t from-veralya-dark/20 to-transparent" />
                   </div>
-                  <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-5 shadow-xl floating">
+                  <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-5 shadow-xl floating z-20">
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 rounded-full bg-veralya-light flex items-center justify-center">
                         <span className="text-2xl">🎯</span>
@@ -275,7 +417,7 @@ function App() {
                       </div>
                     </div>
                   </div>
-                  <div className="absolute -top-4 -right-4 bg-veralya-green text-white rounded-2xl p-4 shadow-xl" style={{ animation: 'float 5s ease-in-out infinite 1s' }}>
+                  <div className="absolute -top-4 -right-4 bg-veralya-green text-white rounded-2xl p-4 shadow-xl z-20" style={{ animation: 'float 5s ease-in-out infinite 1s' }}>
                     <div className="font-display font-bold text-2xl">+37%</div>
                     <div className="font-body text-xs opacity-90">Productividad</div>
                   </div>
@@ -284,210 +426,393 @@ function App() {
             </div>
           </div>
         </section>
+        
+        <LogoCarousel />
 
 
 
-        {/* DISC Method Section */}
-        <section id="disc" className="py-24 lg:py-32 bg-veralya-nude/10 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-veralya-light/20 rounded-full blur-3xl -mr-48 -mt-48" />
+        {/* Método Veralya 5D Section - Premium Redesign */}
+        <section id="metodo-5d" className="py-24 lg:py-40 bg-white relative overflow-hidden">
+          {/* Decorative Elements */}
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-veralya-nude/10 rounded-full blur-[120px] -mr-64 -mt-64" />
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-veralya-light/20 rounded-full blur-[100px] -ml-48 -mb-48" />
+          
+          <div className="w-full px-6 lg:px-12">
+            <div className="max-w-7xl mx-auto">
+              <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12 mb-24">
+                <div className="max-w-2xl">
+                  <span className="reveal-section inline-block px-4 py-2 bg-veralya-light/50 backdrop-blur-sm rounded-full text-veralya-green font-body text-sm font-semibold mb-6">Nuestra Metodología</span>
+                  <h2 className="reveal-section font-display text-5xl lg:text-7xl font-bold text-veralya-dark leading-[1.1]">
+                    Método <span className="text-veralya-green italic font-medium">Veralya 5D</span>
+                  </h2>
+                </div>
+                <div className="lg:max-w-md pb-2">
+                  <p className="reveal-section font-body text-lg text-gray-500 leading-relaxed border-l-2 border-veralya-green/20 pl-8">
+                    El Método Veralya 5D es nuestro sistema propio de transformación organizacional. Un modelo claro, medible y aplicable que conecta el desarrollo del talento con el rendimiento corporativo.
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-32">
+                {[
+                  {
+                    step: '01',
+                    title: 'DIAGNOSTICAR',
+                    subtitle: 'Comprender antes de intervenir',
+                    desc: 'Análisis conductual y motivacional para generar una base objetiva y estratégica para el desarrollo. Sin diagnóstico, no hay estrategia.',
+                    details: ['Estilo de liderazgo', 'Dinámicas de equipo', 'Motivadores clave', 'Análisis conductual'],
+                    color: 'text-veralya-emerald'
+                  },
+                  {
+                    step: '02',
+                    title: 'DESARROLLAR',
+                    subtitle: 'Autoconocimiento y Liderazgo Consciente',
+                    desc: 'Trabajamos con los líderes para fortalecer la autoconciencia, gestión emocional y la toma de decisiones estratégicas.',
+                    details: ['Liderazgo estratégico', 'Mapa de motivadores', 'Fuerzas impulsoras', 'Capacidades críticas'],
+                    color: 'text-veralya-green'
+                  },
+                  {
+                    step: '03',
+                    title: 'DINAMIZAR',
+                    subtitle: 'Equipos de Alto Rendimiento',
+                    desc: 'Convertimos grupos de trabajo en sistemas alineados mediante propósito compartido y comunicación efectiva.',
+                    details: ['Propósito compartido', 'Confianza radical', 'Comunicación efectiva', 'Coordinación mutua'],
+                    color: 'text-veralya-dark'
+                  },
+                  {
+                    step: '04',
+                    title: 'DESPLEGAR',
+                    subtitle: 'Aplicación Directa al Entorno',
+                    desc: 'Formación experiencial y orientada a la acción con transferencia inmediata al puesto de trabajo.',
+                    details: ['Casos reales', 'Dinámicas prácticas', 'Planes de acción', 'Transferencia al puesto'],
+                    color: 'text-veralya-accent'
+                  },
+                  {
+                    step: '05',
+                    title: 'DEMOSTRAR',
+                    subtitle: 'Impacto Medible y Resultados',
+                    desc: 'Medición del impacto organizacional y mejora en clima, compromiso y productividad.',
+                    details: ['Clima laboral', 'Compromiso medido', 'Productividad', 'Retorno de inversión'],
+                    color: 'text-veralya-green'
+                  }
+                ].map((item, index) => (
+                  <div key={index} className="reveal-section group grid lg:grid-cols-12 gap-12 items-start">
+                    <div className="lg:col-span-5 relative">
+                      <div className={`font-display text-[12rem] lg:text-[16rem] font-bold leading-none opacity-5 absolute -top-16 -left-8 pointer-events-none select-none ${item.color}`}>
+                        {item.step}
+                      </div>
+                      <div className="relative z-10 pt-8 pl-4">
+                        <span className="font-body text-veralya-green font-bold tracking-[0.2em] mb-4 block uppercase text-sm">Paso {item.step}</span>
+                        <h3 className="font-display text-4xl lg:text-5xl font-bold text-veralya-dark mb-6 tracking-tight group-hover:text-veralya-green transition-colors duration-500">
+                          {item.title}
+                        </h3>
+                        <p className="font-display text-2xl font-medium text-veralya-green/80 italic mb-8">{item.subtitle}</p>
+                      </div>
+                    </div>
+                    <div className="lg:col-span-1 hidden lg:block h-full border-r border-dashed border-veralya-green/20 mx-auto" />
+                    <div className="lg:col-span-6 pt-8">
+                      <p className="font-body text-xl text-gray-600 leading-relaxed mb-10">
+                        {item.desc}
+                      </p>
+                      <div className="grid grid-cols-2 gap-4">
+                        {item.details.map((detail, dIndex) => (
+                          <div key={dIndex} className="flex items-center gap-3 bg-gray-50 p-4 rounded-2xl group-hover:bg-veralya-light/30 transition-colors duration-500">
+                            <CheckCircle className="w-5 h-5 text-veralya-green flex-shrink-0" />
+                            <span className="font-body text-sm text-veralya-dark font-medium">{detail}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-40 reveal-section glass-dark rounded-[3rem] p-12 lg:p-20 relative overflow-hidden shadow-2xl">
+                <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.05),transparent)] pointer-events-none" />
+                <div className="grid lg:grid-cols-2 gap-20 items-center">
+                  <div>
+                    <h3 className="font-display text-4xl lg:text-5xl font-bold text-white mb-8">
+                      Garantía de <span className="text-veralya-accent">Coherencia</span>
+                    </h3>
+                    <p className="font-body text-white/70 text-xl leading-relaxed mb-12">
+                      Nuestro método no es una serie de talleres aislados, sino un ecosistema estratégico diseñado para que cada paso potencie al siguiente.
+                    </p>
+                    <div className="space-y-6">
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 bg-veralya-accent/20 rounded-full flex items-center justify-center flex-shrink-0">
+                          <Sparkles className="w-6 h-6 text-veralya-accent" />
+                        </div>
+                        <p className="font-display text-2xl text-veralya-accent italic leading-tight">"Sin un diagnóstico profundo, cualquier intervención es solo maquillaje corporativo."</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {[
+                      { val: '+37%', label: 'Productividad', sub: 'Rendimiento medido' },
+                      { val: '-67%', label: 'Conflictos', sub: 'Clima organizacional' },
+                      { val: '+85%', label: 'Comunicación', sub: 'Fluidez del mensaje' },
+                      { val: 'TTI', label: 'Científico', sub: 'Insights validados' }
+                    ].map((stat, sIndex) => (
+                      <div key={sIndex} className="p-8 bg-white/5 backdrop-blur-md rounded-3xl border border-white/10 hover:border-veralya-accent/30 transition-all duration-500 group/stat">
+                        <div className="font-display text-4xl lg:text-5xl font-bold text-veralya-accent mb-2 group-hover/stat:scale-110 transition-transform duration-500 origin-left">{stat.val}</div>
+                        <div className="font-display text-lg font-semibold text-white mb-1 uppercase tracking-wider">{stat.label}</div>
+                        <div className="font-body text-xs text-white/40 uppercase tracking-widest">{stat.sub}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Training Catalog Section */}
+        <section id="formacion" className="py-24 lg:py-32 bg-white relative">
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-veralya-nude/15 rounded-full blur-3xl -ml-48 -mb-48" />
           <div className="w-full px-6 lg:px-12">
             <div className="max-w-6xl mx-auto">
-              {/* Method Section */}
-              <div className="text-center max-w-3xl mx-auto mb-16">
-                <span className="reveal-section inline-block px-4 py-2 bg-white rounded-full text-veralya-green font-body text-sm font-medium mb-6 shadow-sm">Nuestro Método</span>
+              <div className="text-center mb-16">
+                <span className="reveal-section inline-block px-4 py-2 bg-veralya-light rounded-full text-veralya-green font-body text-sm font-medium mb-6">Resultados y Aprendizajes</span>
                 <h2 className="reveal-section font-display text-4xl lg:text-5xl font-semibold text-veralya-dark mb-6">
-                  Conoce el <span className="text-veralya-green">ADN conductual</span> de tu equipo
+                  Impacto <span className="text-veralya-green">Medible</span>
                 </h2>
-                <p className="reveal-section font-body text-lg text-gray-600">
-                  Nuestro método identifica cuatro estilos de comportamiento que determinan cómo nos comunicamos,
-                  tomamos decisiones y respondemos a los desafíos. Combinado con los Motivadores (TTI),
-                  descubrimos no solo CÓMO actúas, sino POR QUÉ.
+                <p className="reveal-section font-body text-lg text-gray-600 max-w-2xl mx-auto">
+                  Estudios vinculados a intervenciones estructuradas de liderazgo y equipos basadas en diagnóstico conductual reflejan resultados reales en la organización.
                 </p>
               </div>
 
-              {/* Método 5D Placeholder */}
-              <div className="reveal-section mb-20 bg-white/50 backdrop-blur-sm rounded-3xl p-8 lg:p-12 border border-veralya-nude/30 shadow-sm text-center">
-                <div className="max-w-3xl mx-auto">
-                  <h3 className="font-display text-3xl font-semibold text-veralya-dark mb-4">Método 5D</h3>
-                  <p className="font-body text-veralya-green text-lg mb-6">Una metodología práctica para diagnosticar, intervenir y medir evolución</p>
-                  <div className="w-20 h-1 bg-veralya-green/20 mx-auto mb-8" />
-                  <p className="font-body text-gray-500 italic">Una metodología orientada a resultados tangibles y transformación sostenible en la organización.</p>
-                </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                {[
+                  {
+                    title: 'Comunicación Efectiva',
+                    hours: '6-8h',
+                    desc: 'Mejorar la claridad, escucha activa y adaptación del mensaje a perfiles y feedback efectivo.'
+                  },
+                  {
+                    title: 'Liderazgo Eficaz',
+                    hours: '8-10h',
+                    desc: 'Liderazgo situacional, gestión de personas, motivación, delegación y empoderamiento.'
+                  },
+                  {
+                    title: 'Gestión de Conflictos',
+                    hours: '6-8h',
+                    desc: 'Comunicación en situaciones difíciles, gestión emocional y técnicas de resolución win-win.'
+                  },
+                  {
+                    title: 'Ventas y Cliente',
+                    hours: '8-12h',
+                    desc: 'Estilos de venta, motivadores de compra, persuasión y fidelización estratégica.'
+                  },
+                  {
+                    title: 'Planificación Estratégica',
+                    hours: '6-10h',
+                    desc: 'Pensamiento estratégico, OKR/KPIs y alineación de roles con los objetivos corporativos.'
+                  },
+                  {
+                    title: 'Trabajo en Equipo',
+                    hours: '6-8h',
+                    desc: 'Fortalezas, coordinación operativa, gestión de expectativas y compromiso colectivo.'
+                  }
+                ].map((item, index) => (
+                  <div key={index} className="reveal-section bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:border-veralya-green/30 transition-colors">
+                    <div className="flex justify-between items-start mb-4">
+                      <h3 className="font-display text-xl font-bold text-veralya-dark">{item.title}</h3>
+                      <span className="px-3 py-1 bg-veralya-light text-veralya-green text-xs font-bold rounded-full">{item.hours}</span>
+                    </div>
+                    <p className="font-body text-sm text-gray-500 leading-relaxed">{item.desc}</p>
+                  </div>
+                ))}
               </div>
 
-              <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
-                <div className="reveal-section">
-                  <h3 className="font-display text-2xl font-semibold text-veralya-dark mb-6">Los 4 estilos DISC</h3>
-                  <div className="grid grid-cols-2 gap-4">
-                    {discProfiles.map((profile, index) => (
-                      <div key={index} className={`${profile.color} ${profile.textColor} rounded-2xl p-6`}>
-                        <div className="font-display text-5xl font-bold mb-2">{profile.letter}</div>
-                        <div className="font-display font-semibold text-lg mb-1">{profile.name}</div>
-                        <div className="font-body text-sm opacity-90">{profile.desc}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+              <div className="reveal-section bg-veralya-light/30 rounded-3xl p-8 text-center border border-veralya-green/10">
+                <p className="font-body text-veralya-dark font-medium">
+                  ¿Necesitas un programa a medida? <span className="text-veralya-green font-bold">Adaptamos nuestras formaciones</span> de 6 a 12 horas para vuestro equipo.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-                <div className="reveal-section">
-                  <h3 className="font-display text-2xl font-semibold text-veralya-dark mb-6">Las 6 dimensiones conductuales</h3>
-                  <div className="space-y-3">
-                    {motivators.map((m, index) => (
-                      <div key={index} className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm border border-veralya-nude/10 hover:border-veralya-nude/40 transition-colors">
-                        <div className="w-10 h-10 rounded-full bg-veralya-nude/20 flex items-center justify-center text-veralya-green font-display font-bold">
-                          {index + 1}
+        {/* Programas Estratégicos - High-End Expansion */}
+        <section id="programas" className="bg-gray-50 flex flex-col relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-white to-transparent z-10" />
+          
+          <div className="pt-24 lg:pt-32 pb-16 bg-white">
+            <div className="max-w-7xl mx-auto px-6 lg:px-12">
+              <div className="reveal-section max-w-3xl">
+                <span className="inline-block px-4 py-2 bg-veralya-nude/20 rounded-full text-veralya-dark font-body text-xs font-bold uppercase tracking-widest mb-6">Programas de Transformación</span>
+                <h2 className="font-display text-5xl lg:text-7xl font-bold text-veralya-dark mb-8">
+                  Soluciones para el <span className="text-veralya-emerald">Alto Rendimiento</span>
+                </h2>
+                <p className="font-body text-xl text-gray-500 leading-relaxed">
+                  Diseñamos itinerarios de desarrollo que conectan el propósito individual con los objetivos estratégicos de la compañía.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Program 1: LAE N1 */}
+          <div className="py-16 lg:py-24 relative group overflow-hidden bg-white border-b border-gray-100">
+            <div className="absolute top-0 right-0 w-1/3 h-full bg-veralya-nude/10 clip-path-slant pointer-events-none transition-transform duration-1000 group-hover:scale-110" />
+            <div className="w-full px-6 lg:px-12 relative z-10">
+              <div className="max-w-7xl mx-auto">
+                <div className="grid lg:grid-cols-2 gap-20 items-center">
+                  <div className="reveal-section">
+                    <div className="inline-flex items-center gap-2 mb-8 text-veralya-green font-bold tracking-widest text-xs uppercase">
+                      <span className="w-8 h-[1px] bg-veralya-green" />
+                      Liderazgo Estratégico
+                    </div>
+                    <h2 className="font-display text-5xl lg:text-7xl font-bold text-veralya-dark mb-8">
+                      LAE <span className="text-veralya-emerald">Nivel 1</span>
+                    </h2>
+                    <p className="font-display text-2xl text-veralya-green mb-8 italic">"El autoconocimiento es el origen de todo liderazgo extraordinario."</p>
+                    <p className="font-body text-xl text-gray-500 leading-relaxed mb-12">
+                      Mediante la integración del análisis del comportamiento y los motivadores, obtenemos una visión completa de cómo actúan las personas y qué factores influyen en su rendimiento y toma de decisiones estratégica.
+                    </p>
+                    <div className="grid sm:grid-cols-2 gap-6 mb-12">
+                      {[
+                        { title: 'Informe Completo', desc: 'Análisis de conducta y motivadores.' },
+                        { title: 'Sesión Feedback', desc: 'Interpretación experta de resultados.' },
+                        { title: 'Plan de Acción', desc: 'Objetivos SMART personalizados.' },
+                        { title: 'Capa L1', desc: 'Fundamentos del liderazgo consciente.' }
+                      ].map((card, cidx) => (
+                        <div key={cidx} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 group/card hover:bg-veralya-dark transition-all duration-500">
+                          <h4 className="font-display font-bold text-lg text-veralya-dark mb-2 group-hover/card:text-white transition-colors">{card.title}</h4>
+                          <p className="font-body text-sm text-gray-400 group-hover/card:text-white/60 transition-colors">{card.desc}</p>
                         </div>
-                        <div>
-                          <div className="font-display font-semibold text-veralya-dark">{m.name}</div>
-                          <div className="font-body text-sm text-gray-500">{m.desc}</div>
+                      ))}
+                    </div>
+                    <div className="flex flex-wrap gap-4 items-center">
+                      <button 
+                        onClick={() => setExpandedProgram('lae-n1')}
+                        className="inline-flex items-center gap-3 px-8 py-4 bg-veralya-dark text-white font-display font-bold rounded-full hover:bg-veralya-emerald transition-all shadow-lg active:scale-95"
+                      >
+                        Ver detalles del programa
+                      </button>
+                      <a href="https://wa.me/34646181150" className="inline-flex items-center gap-3 px-8 py-4 border-2 border-veralya-dark text-veralya-dark font-display font-bold rounded-full hover:bg-veralya-dark hover:text-white transition-all group/link">
+                        Solicitar Dossier
+                        <ArrowRight className="w-5 h-5 group-hover/link:translate-x-2 transition-transform" />
+                      </a>
+                    </div>
+                  </div>
+                  <div className="reveal-section relative">
+                    <div className="program-image-container aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl relative">
+                      <img src={getAssetPath("program-lae1.png")} alt="LAE Level 1" className="w-full h-[120%] object-cover absolute top-[-10%] transition-all duration-1000" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-veralya-dark/60 via-transparent to-transparent opacity-80" />
+                      <div className="absolute bottom-12 left-12 right-12">
+                        <div className="glass-effect p-8 rounded-3xl border border-white/30">
+                          <div className="text-4xl font-display font-bold text-veralya-dark mb-1">Fase I</div>
+                          <div className="text-sm font-body text-veralya-emerald font-bold uppercase tracking-wider">Cimentación del Líder</div>
                         </div>
                       </div>
-                    ))}
+                    </div>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
 
-              <div className="reveal-section bg-white rounded-2xl p-8 shadow-lg border border-veralya-nude/20 relative">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-veralya-nude/5 rounded-full -mr-16 -mt-16" />
-                <h3 className="font-display text-2xl font-semibold text-veralya-dark mb-6 text-center italic">¿Qué conseguimos con nuestro método + Motivadores?</h3>
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Program 2: LAE N2 */}
+          <div className="py-16 lg:py-24 relative group overflow-hidden bg-gray-50">
+            <div className="w-full px-6 lg:px-12 relative z-10">
+              <div className="max-w-7xl mx-auto">
+                <div className="grid lg:grid-cols-2 gap-20 items-center">
+                  <div className="reveal-section order-2 lg:order-1 relative">
+                    <div className="program-image-container aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl relative">
+                      <img src={getAssetPath("program-lae2.png")} alt="LAE Level 2" className="w-full h-[120%] object-cover absolute top-[-10%] transition-all duration-1000" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-veralya-emerald/60 via-transparent to-transparent opacity-80" />
+                      <div className="absolute top-12 left-12">
+                        <div className="glass-dark p-8 rounded-3xl border border-white/20">
+                          <div className="text-4xl font-display font-bold text-veralya-accent mb-1">Fase II</div>
+                          <div className="text-sm font-body text-white/80 font-bold uppercase tracking-wider">Liderazgo Relacional</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="reveal-section order-1 lg:order-2">
+                    <div className="inline-flex items-center gap-2 mb-8 text-veralya-green font-bold tracking-widest text-xs uppercase">
+                      <span className="w-8 h-[1px] bg-veralya-green" />
+                      Liderazgo Adaptativo
+                    </div>
+                    <h2 className="font-display text-5xl lg:text-7xl font-bold text-veralya-dark mb-8">
+                      LAE <span className="text-veralya-emerald italic">Nivel 2</span>
+                    </h2>
+                    <p className="font-display text-2xl text-veralya-green mb-8 italic">"El líder no trata a todos igual, trata a todos como necesitan ser tratados."</p>
+                    <p className="font-body text-xl text-gray-500 leading-relaxed mb-12">
+                      Fase avanzada enfocada en la maestría relacional. El líder aprende a adaptar su enfoque a las necesidades del entorno para reducir conflictos e integrar el conocimiento práctico en el rendimiento del equipo.
+                    </p>
+                    <div className="space-y-6 mb-12">
+                      {[
+                        'Liderazgo adaptativo y comunicación efectiva',
+                        'Feedback estratégico y escucha activa',
+                        'Gestión preventiva de conflictos',
+                        'Integración práctica del conocimiento'
+                      ].map((item, iidx) => (
+                        <div key={iidx} className="flex items-center gap-4 bg-white p-5 rounded-2xl border border-gray-100 shadow-sm transition-transform hover:-translate-y-1">
+                          <div className="w-10 h-10 rounded-full bg-veralya-light flex items-center justify-center text-veralya-green">
+                            <CheckCircle className="w-6 h-6" />
+                          </div>
+                          <span className="font-body font-medium text-veralya-dark">{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex flex-wrap gap-4 items-center mt-8">
+                      <button 
+                        onClick={() => setExpandedProgram('lae-n2')}
+                        className="inline-flex items-center gap-3 px-8 py-4 bg-veralya-green text-white font-display font-bold rounded-full hover:bg-veralya-dark transition-all shadow-lg active:scale-95"
+                      >
+                        Explorar Nivel 2
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Program 3: EAR */}
+          <div className="py-16 lg:py-24 relative group overflow-hidden bg-veralya-dark text-white">
+            <div className="absolute top-1/2 left-0 w-full h-[1px] bg-white/10" />
+            <div className="w-full px-6 lg:px-12 relative z-10">
+              <div className="max-w-7xl mx-auto">
+                <div className="text-center max-w-3xl mx-auto mb-24">
+                  <div className="inline-flex items-center gap-2 mb-8 text-veralya-accent font-bold tracking-widest text-xs uppercase">
+                    <span className="w-8 h-[1px] bg-veralya-accent" />
+                    Alto Rendimiento
+                  </div>
+                  <h2 className="font-display text-6xl lg:text-8xl font-bold mb-8">
+                    EAR <span className="text-veralya-accent font-medium italic">Equipos</span>
+                  </h2>
+                  <p className="font-body text-xl text-white/60 leading-relaxed">
+                    Transformación de grupos convencionales en sistemas de alto rendimiento mediante visión sistémica y superación del piloto automático organizacional.
+                  </p>
+                </div>
+                
+                <div className="grid md:grid-cols-3 gap-8">
                   {[
-                    'Identificar cómo actúa cada persona y qué le motiva',
-                    'Mejorar la comunicación y reducir fricciones',
-                    'Alinear comportamientos con objetivos estratégicos',
-                    'Potenciar la productividad y colaboración'
-                  ].map((item, index) => (
-                    <div key={index} className="flex items-start gap-3 p-3 rounded-xl bg-veralya-nude/5 border border-veralya-nude/10">
-                      <CheckCircle className="w-5 h-5 text-veralya-green flex-shrink-0 mt-0.5" />
-                      <p className="font-body text-gray-700 text-sm">{item}</p>
+                    { title: 'Propósito Compartido', val: '01', desc: 'Alineación total con los objetivos estratégicos y valores de la compañía.' },
+                    { title: 'Confianza y Comunicación', val: '02', desc: 'Gestión constructiva del conflicto y coordinación operativa de alto grado.' },
+                    { title: 'Integración Práctica', val: '03', desc: 'Transferencia directa al puesto para multiplicar resultados y reducir fricciones.' }
+                  ].map((feat, fidx) => (
+                    <div key={fidx} className="reveal-section bg-white/5 backdrop-blur-md p-10 rounded-[3rem] border border-white/10 hover:border-veralya-accent/40 transition-all duration-500 group/ear">
+                      <div className="text-6xl font-display font-bold text-veralya-accent/10 mb-8 group-hover/ear:text-veralya-accent/30 transition-colors">{feat.val}</div>
+                      <h4 className="text-2xl font-display font-bold mb-4">{feat.title}</h4>
+                      <p className="font-body text-white/50 leading-relaxed min-h-[80px]">{feat.desc}</p>
+                      <div className="mt-8 pt-8 border-t border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <span className="text-veralya-accent font-display italic">Sistemas de Alto Rendimiento</span>
+                      </div>
                     </div>
                   ))}
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Services Section */}
-        <section id="servicios" className="py-24 lg:py-32 bg-white relative">
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-veralya-nude/15 rounded-full blur-3xl -ml-48 -mb-48" />
-          <div className="w-full px-6 lg:px-12">
-            <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-16">
-                <span className="reveal-section inline-block px-4 py-2 bg-veralya-light rounded-full text-veralya-green font-body text-sm font-medium mb-6">Nuestros Servicios</span>
-                <h2 className="reveal-section font-display text-4xl lg:text-5xl font-semibold text-veralya-dark mb-6">
-                  Paquetes diseñados para <span className="text-veralya-green">transformar</span>
-                </h2>
-                <p className="reveal-section font-body text-lg text-gray-600">
-                  Cada organización es única. Adaptamos nuestras evaluaciones y programas
-                  a tus necesidades específicas para maximizar el impacto.
-                </p>
-              </div>
-
-              <div className="space-y-4">
-                {services.map((service, index) => (
-                  <div key={index} className="reveal-section bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
-                    <button onClick={() => setActiveService(activeService === index ? null : index)} className="w-full p-6 lg:p-8 flex items-center justify-between text-left hover:bg-gray-50 transition-colors">
-                      <div>
-                        <h3 className="font-display text-xl lg:text-2xl font-semibold text-veralya-dark">{service.title}</h3>
-                        <p className="font-body text-veralya-green">{service.subtitle}</p>
-                      </div>
-                      <ChevronDown className={`w-6 h-6 text-veralya-green transition-transform ${activeService === index ? 'rotate-180' : ''}`} />
-                    </button>
-                    <div className={`overflow-hidden transition-all duration-500 ${activeService === index ? 'max-h-[600px]' : 'max-h-0'}`}>
-                      <div className="p-6 lg:p-8 pt-0 border-t border-gray-100">
-                        <p className="font-body text-gray-600 mb-6">{service.description}</p>
-                        <div className="grid md:grid-cols-2 gap-8">
-                          <div>
-                            <h4 className="font-display font-semibold text-veralya-dark mb-3">Beneficios</h4>
-                            <ul className="space-y-2">
-                              {service.benefits.map((b, i) => (
-                                <li key={i} className="flex items-center gap-2 text-sm text-gray-600">
-                                  <CheckCircle className="w-4 h-4 text-veralya-green" />{b}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                          <div>
-                            <h4 className="font-display font-semibold text-veralya-dark mb-3">Incluye</h4>
-                            <ul className="space-y-2">
-                              {service.features.map((f, i) => (
-                                <li key={i} className="flex items-center gap-2 text-sm text-gray-600">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-veralya-accent" />{f}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Programs Section */}
-        <section id="programas" className="py-24 lg:py-32 bg-veralya-dark text-white">
-          <div className="w-full px-6 lg:px-12">
-            <div className="max-w-6xl mx-auto">
-              <div className="text-center max-w-3xl mx-auto mb-16">
-                <span className="reveal-section inline-block px-4 py-2 bg-white/10 rounded-full text-veralya-accent font-body text-sm font-medium mb-6">Nuestros Programas</span>
-                <h2 className="reveal-section font-display text-4xl lg:text-5xl font-semibold mb-6">
-                  Programas basados en <span className="text-veralya-accent">nuestro método</span>
-                </h2>
-                <p className="reveal-section font-body text-lg text-white/80">
-                  Estructurados para generar cambios profundos y sostenibles en el liderazgo
-                  y el rendimiento de los equipos.
-                </p>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                {[
-                  {
-                    title: 'LAE N1',
-                    subtitle: 'Liderazgo Altamente Efectivo - Nivel 1',
-                    desc: 'Autoconocimiento del líder mediante perfiles conductuales y Motivadores. Informe motivacional y conductual completo.',
-                    duration: 'Formato adaptable',
-                    features: ['Perfil individualizado completo', 'Motivadores', 'Modelo O.S.A.R', 'Plan SMART']
-                  },
-                  {
-                    title: 'LAE N2',
-                    subtitle: 'Liderazgo Adaptativo - Nivel 2',
-                    desc: 'Adapta tu estilo según las necesidades del equipo. Identifica perfiles conductuales y motivacionales en colaboradores.',
-                    duration: 'Implementación por fases',
-                    features: ['Comunicación efectiva', 'Gestión de conflictos', 'Escucha generativa', '85% mejora comunicación']
-                  },
-                  {
-                    title: 'EAR',
-                    subtitle: 'Equipos de Alto Rendimiento',
-                    desc: 'Transforma equipos mediante la visión sistémica y superación del piloto automático.',
-                    duration: 'Intervención a medida',
-                    features: ['Visión sistémica', 'Módulos de trabajo', 'ROI 387%', 'Seguimiento continuo']
-                  },
-                  {
-                    title: 'Selección Directiva',
-                    subtitle: 'Proceso de Selección de Talento',
-                    desc: 'Proceso en 3 fases para encontrar el candidato ideal mediante evaluación conductual.',
-                    duration: 'A medida',
-                    features: ['Consultoría sin compromiso', 'Perfil conductual ideal', 'Talent Comparison', 'Candidatos finalistas']
-                  }
-                ].map((program, index) => (
-                  <div key={index} className="reveal-section bg-white/5 backdrop-blur-sm rounded-2xl p-8 hover:bg-white/10 transition-colors border border-white/10 hover:border-veralya-nude/30">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="font-display text-2xl font-semibold">{program.title}</h3>
-                      <span className="px-3 py-1 bg-veralya-nude/20 text-veralya-nude border border-veralya-nude/30 rounded-full text-sm font-body">A medida</span>
-                    </div>
-                    <p className="font-body text-veralya-accent mb-3">{program.subtitle}</p>
-                    <p className="font-body text-white/80 mb-6">{program.desc}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {program.features.map((f, i) => (
-                        <span key={i} className="px-3 py-1 bg-white/10 rounded-full text-sm font-body text-white/90 border border-white/5">{f}</span>
-                      ))}
-                    </div>
-                  </div>
-                ))}
+                <div className="mt-20 text-center">
+                  <button 
+                    onClick={() => setExpandedProgram('ear')}
+                    className="inline-flex items-center gap-3 px-12 py-5 bg-veralya-accent text-veralya-dark font-display font-bold rounded-full hover:scale-105 transition-all shadow-xl shadow-veralya-accent/10 active:scale-95"
+                  >
+                    Quiero transformar mi equipo
+                    <ArrowRight className="w-6 h-6" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -515,21 +840,21 @@ function App() {
                     role: 'Cofundadora & Consultora Senior',
                     image: getAssetPath('team-monica.png'),
                     imageClass: 'object-top scale-100',
-                    desc: 'Máster en Dirección y Gestión de Recursos Humanos con más de diez años de experiencia en desarrollo del talento y gestión de equipos.',
-                    specialties: ['Gestión de equipos', 'Análisis conductual y motivacional', 'Certificación en análisis de la conducta humana por TTI Success Insights', 'Desarrollo de liderazgo'],
-                    credentials: ['Máster en Dirección y Gestión de Recursos Humanos', 'Certificación en análisis de la conducta humana por TTI Success Insights']
+                    desc: 'Experta en liderazgo y gestión de equipos, con más de 10 de experiencia en recursos humanos en empresas a nivel internacional.',
+                    specialties: ['Gestión de equipos', 'Desarrollo de liderazgo', 'Análisis de la conducta humana', 'Comunicación efectiva'],
+                    credentials: ['Certificación en análisis de la conducta humana por TTI Success Insights']
                   },
                   {
                     name: 'Raquel Arroyo Romero',
                     role: 'Cofundadora & Estratega de Desarrollo',
                     image: getAssetPath('team-raquel.png'),
                     imageClass: 'object-[center_15%] scale-[1.45] origin-top',
-                    desc: 'Experta en desarrollo humano, comunicación e inteligencia emocional. Máster en Desarrollo Humano. Planificación estratégica para empresas y pymes.',
-                    specialties: ['Planificación estratégica para empresas y pymes', 'Inteligencia emocional', 'Certificación en análisis de la conducta humana por TTI Success Insights', 'Comportamiento organizacional'],
-                    credentials: ['Máster en Desarrollo Humano', 'Certificación en análisis de la conducta humana por TTI Success Insights']
+                    desc: 'Especialista en planificación estratégica para empresas y pymes. Experta en desarrollo humano, comunicación efectiva e inteligencia emocional.',
+                    specialties: ['Planificación estratégica', 'Desarrollo humano', 'Comunicación efectiva', 'Inteligencia emocional'],
+                    credentials: ['Certificación en análisis de la conducta humana por TTI Success Insights']
                   }
                 ].map((member, index) => (
-                  <div key={index} className="reveal-section bg-white rounded-[2rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 flex flex-col">
+                  <div key={index} className="reveal-section team-card bg-white rounded-[2rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 flex flex-col">
                     <div className="grid md:grid-cols-12 h-full">
                       <div className="md:col-span-5 relative overflow-hidden bg-gray-50">
                         <img src={member.image} alt={member.name} className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ${member.imageClass || 'object-top'} group-hover:scale-110`} />
@@ -585,33 +910,51 @@ function App() {
           </div>
         </section>
 
-        {/* Testimonials Section */}
-        <section id="testimonios" className="py-24 lg:py-32 bg-veralya-nude/10">
+        {/* Impacto Medible Section - Premium Redesign */}
+        <section id="impacto" className="py-24 lg:py-40 bg-white relative overflow-hidden">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-veralya-green/20 to-transparent" />
+          
           <div className="w-full px-6 lg:px-12">
-            <div className="max-w-6xl mx-auto">
-              <div className="text-center max-w-3xl mx-auto mb-16">
-                <span className="reveal-section inline-block px-4 py-2 bg-white rounded-full text-veralya-green font-body text-sm font-medium mb-6">Resultados</span>
-                <h2 className="reveal-section font-display text-4xl lg:text-5xl font-semibold text-veralya-dark mb-6">
-                  Resultados y <span className="text-veralya-green">aprendizajes</span>
+            <div className="max-w-7xl mx-auto">
+              <div className="text-center max-w-3xl mx-auto mb-20">
+                <span className="reveal-section inline-block px-4 py-2 bg-veralya-light/50 backdrop-blur-sm rounded-full text-veralya-green font-body text-sm font-semibold mb-6">Resultados Reales</span>
+                <h2 className="reveal-section font-display text-5xl lg:text-7xl font-bold text-veralya-dark leading-tight">
+                  Impacto <span className="text-veralya-green italic">Medible</span>
                 </h2>
+                <p className="font-body text-xl text-gray-500 mt-8">
+                  No creemos en el desarrollo subjetivo. Utilizamos métricas claras para demostrar el retorno de cada intervención estratégica.
+                </p>
               </div>
 
-              <div className="grid md:grid-cols-3 gap-6">
-                {testimonials.map((t, index) => (
-                  <div key={index} className="reveal-section glass-card rounded-2xl p-6 lg:p-8">
-                    <Quote className="w-10 h-10 text-veralya-green/30 mb-4" />
-                    <div className="flex gap-1 mb-4">
-                      {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-veralya-green text-veralya-green" />)}
-                    </div>
-                    <p className="font-body text-gray-700 leading-relaxed mb-6 text-sm">"{t.quote.substring(0, 180)}..."</p>
-                    <div className="flex items-center gap-4 pt-4 border-t border-gray-100">
-                      <div>
-                        <h4 className="font-display font-semibold text-veralya-dark">{t.name}</h4>
-                        <p className="font-body text-xs text-gray-500">{t.role}</p>
-                      </div>
+              <div className="grid md:grid-cols-3 gap-8 mb-24"> {/* No services array needed here, using direct JSX components for premium control */}
+                {[
+                  { val: '+37%', label: 'Productividad', sub: 'Incremento medio en equipos directivos tras el programa LAE.' },
+                  { val: '-67%', label: 'Conflictividad', sub: 'Reducción de barreras de comunicación y fricciones internas.' },
+                  { val: '+85%', label: 'Alineación', sub: 'Mejora en la ejecución de objetivos estratégicos compartidos.' }
+                ].map((stat, index) => (
+                  <div key={index} className="reveal-section group p-12 bg-gray-50 rounded-[3rem] hover:bg-veralya-dark transition-all duration-700 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-veralya-green/10 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-1000" />
+                    <div className="relative z-10">
+                      <div className="font-display text-6xl lg:text-7xl font-bold text-veralya-green mb-6 group-hover:text-veralya-accent transition-colors">{stat.val}</div>
+                      <div className="font-display text-2xl font-bold text-veralya-dark mb-4 group-hover:text-white transition-colors">{stat.label}</div>
+                      <p className="font-body text-gray-500 group-hover:text-white/60 transition-colors leading-relaxed">{stat.sub}</p>
                     </div>
                   </div>
                 ))}
+              </div>
+
+              <div className="reveal-section glass-dark p-12 lg:p-16 rounded-[4rem] text-center border border-white/10 shadow-3xl relative group overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-veralya-green/20 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-1000" />
+                <div className="relative z-10 max-w-2xl mx-auto">
+                  <Award className="w-16 h-16 text-veralya-accent mx-auto mb-8 animate-pulse" />
+                  <h3 className="font-display text-3xl lg:text-4xl font-bold text-white mb-6">Formación 100% Bonificable</h3>
+                  <p className="font-body text-white/70 text-lg leading-relaxed mb-10">
+                    Como expertos en gestión de bonificaciones FUNDAE, optimizamos tu crédito de formación para que el impacto organizacional no suponga una barrera financiera.
+                  </p>
+                  <button className="px-10 py-5 bg-veralya-accent text-veralya-dark font-display font-bold rounded-full hover:scale-105 transition-transform active:scale-95 shadow-lg shadow-veralya-accent/20">
+                    Consultar Crédito Disponible
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -652,72 +995,48 @@ function App() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="py-20 bg-veralya-dark text-white relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-veralya-nude via-veralya-green to-veralya-nude opacity-30" />
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-veralya-nude/5 rounded-full blur-3xl -mt-48" />
-        <div className="w-full px-6 lg:px-12 py-16 lg:py-20">
-          <div className="grid lg:grid-cols-5 gap-12 lg:gap-8 max-w-7xl mx-auto">
-            <div className="lg:col-span-2">
-              <div className="mb-6">
-                <img src={getAssetPath("veralya-logo-footer.png")} alt="Veralya" className="h-16 w-auto object-contain" />
+      <footer id="contacto" className="bg-veralya-dark text-white pt-32 pb-12 relative overflow-hidden">
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        
+        <div className="w-full px-6 lg:px-12 relative z-10 pb-20">
+          <div className="max-w-7xl mx-auto">
+              <div className="reveal-section flex flex-col items-start lg:items-center text-center lg:text-left">
+                <div className="mb-10 flex items-center gap-3">
+                  <div className="w-12 h-12 bg-veralya-green rounded-xl flex items-center justify-center font-display text-2xl font-bold text-white shadow-lg shadow-veralya-green/20">V</div>
+                  <span className="font-display text-3xl font-bold tracking-tight">Veralya<span className="text-veralya-green">.</span></span>
+                </div>
+                <h3 className="font-display text-4xl lg:text-5xl font-bold leading-tight mb-16 max-w-xl">
+                  ¿Listo para transformar <br />
+                  tus <span className="text-veralya-accent italic">objetivos</span> en resultados?
+                </h3>
+                
+                <a href="mailto:equipo@veralyaconsulting.com" className="group flex items-center gap-6 p-8 bg-white/5 rounded-[2.5rem] border border-white/10 hover:border-veralya-green/50 transition-all duration-500 w-full max-w-lg mx-auto lg:mx-0">
+                  <div className="w-16 h-16 bg-veralya-green/20 rounded-full flex items-center justify-center">
+                    <Mail className="w-8 h-8 text-veralya-green" />
+                  </div>
+                  <div className="text-left">
+                    <div className="text-xs font-body text-white/40 uppercase tracking-widest mb-1">Escríbenos directamente</div>
+                    <div className="text-2xl font-display font-medium group-hover:text-veralya-green transition-colors">equipo@veralyaconsulting.com</div>
+                  </div>
+                </a>
+
+                {/* Decorative TTI Shield positioned below contact */}
+                <div className="mt-24 opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+                   <img src={getAssetPath("tti-seal.jpg")} alt="TTI Success Insights Certified" className="h-28" />
+                </div>
               </div>
-              <p className="font-body text-white/70 mb-6 max-w-sm">
-                Transformamos equipos mediante análisis conductual, desarrollo de liderazgo
-                y programas de alto rendimiento.
-              </p>
-              <div className="space-y-2">
-                <p className="font-body text-sm text-white/70">📍 C. Marie Curie, 9, 28521 Rivas-Vaciamadrid</p>
-                <p className="font-body text-sm text-white/70">✉️ info@veralyaconsulting.com</p>
-                <p className="font-body text-sm text-white/70">📞 +34 646 18 11 50</p>
-              </div>
             </div>
 
-            <div>
-              <h4 className="font-display font-semibold text-lg mb-6">Servicios</h4>
-              <ul className="space-y-3">
-                <li><button onClick={() => scrollToSection('disc')} className="font-body text-sm text-white/70 hover:text-veralya-green transition-colors">Análisis conductual</button></li>
-                <li><button onClick={() => scrollToSection('programas')} className="font-body text-sm text-white/70 hover:text-veralya-green transition-colors">Programa LAE N1</button></li>
-                <li><button onClick={() => scrollToSection('programas')} className="font-body text-sm text-white/70 hover:text-veralya-green transition-colors">Programa LAE N2</button></li>
-                <li><button onClick={() => scrollToSection('programas')} className="font-body text-sm text-white/70 hover:text-veralya-green transition-colors">Programa EAR</button></li>
-                <li><button onClick={() => scrollToSection('servicios')} className="font-body text-sm text-white/70 hover:text-veralya-green transition-colors">Selección Directiva</button></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-display font-semibold text-lg mb-6">Empresa</h4>
-              <ul className="space-y-3">
-                <li><button onClick={() => scrollToSection('equipo')} className="font-body text-sm text-white/70 hover:text-veralya-green transition-colors">Quiénes Somos</button></li>
-                <li><button onClick={() => scrollToSection('equipo')} className="font-body text-sm text-white/70 hover:text-veralya-green transition-colors">Nuestro Equipo</button></li>
-                <li><button onClick={() => scrollToSection('disc')} className="font-body text-sm text-white/70 hover:text-veralya-green transition-colors">Nuestro método</button></li>
-                <li><button onClick={() => scrollToSection('contacto')} className="font-body text-sm text-white/70 hover:text-veralya-green transition-colors">Contacto</button></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-display font-semibold text-lg mb-6">Legal</h4>
-              <ul className="space-y-3">
-                <li><span className="font-body text-sm text-white/70 hover:text-veralya-green transition-colors cursor-pointer">Política de Privacidad</span></li>
-                <li><span className="font-body text-sm text-white/70 hover:text-veralya-green transition-colors cursor-pointer">Aviso Legal</span></li>
-                <li><span className="font-body text-sm text-white/70 hover:text-veralya-green transition-colors cursor-pointer">Política de Cookies</span></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div className="border-t border-white/10">
-          <div className="w-full px-6 lg:px-12 py-6">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4 max-w-7xl mx-auto">
-              <p className="font-body text-sm text-white/50">{new Date().getFullYear()} Veralya Consulting. Todos los derechos reservados.</p>
-              <div className="flex items-center gap-4">
-                <span className="text-white/40 font-body text-xs">TTI Success Insights Partner</span>
-                <span className="text-white/20">•</span>
-                <span className="text-white/40 font-body text-xs">Análisis Conductual</span>
+            <div className="flex flex-col md:flex-row items-center justify-between border-t border-white/10 pt-12 text-white/30 font-body text-xs">
+              <p>&copy; {new Date().getFullYear()} Veralya Consulting. Excelencia en Liderazgo Directivo.</p>
+              <div className="flex gap-8 mt-6 md:mt-0">
+                <a href="#" className="hover:text-white transition-colors">Legal</a>
+                <a href="#" className="hover:text-white transition-colors">Privacidad</a>
+                <a href="#" className="hover:text-white transition-colors">Cookies</a>
               </div>
             </div>
           </div>
-        </div>
-      </footer>
+        </footer>
     </div>
   );
 }
