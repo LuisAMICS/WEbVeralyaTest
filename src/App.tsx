@@ -1000,62 +1000,29 @@ function App() {
         
         <div className="w-full px-6 lg:px-12 relative z-10">
           <div className="max-w-7xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-24 mb-24">
-              <div className="reveal-section">
-                <div className="flex items-center gap-3 mb-10">
+              <div className="reveal-section flex flex-col items-start lg:items-center text-center lg:text-left">
+                <div className="mb-10 flex items-center gap-3">
                   <div className="w-12 h-12 bg-veralya-green rounded-xl flex items-center justify-center font-display text-2xl font-bold text-white shadow-lg shadow-veralya-green/20">V</div>
                   <span className="font-display text-3xl font-bold tracking-tight">Veralya<span className="text-veralya-green">.</span></span>
                 </div>
-                <h3 className="font-display text-4xl lg:text-5xl font-bold leading-tight mb-10">
+                <h3 className="font-display text-4xl lg:text-5xl font-bold leading-tight mb-16 max-w-xl">
                   ¿Listo para transformar <br />
                   tus <span className="text-veralya-accent italic">objetivos</span> en resultados?
                 </h3>
-                <div className="space-y-6">
-                  <a href="mailto:equipo@veralyaconsulting.com" className="group flex items-center gap-4 p-6 bg-white/5 rounded-3xl border border-white/10 hover:border-veralya-green/50 transition-all duration-500">
-                    <div className="w-12 h-12 bg-veralya-green/20 rounded-full flex items-center justify-center">
-                      <Mail className="w-6 h-6 text-veralya-green" />
-                    </div>
-                    <div>
-                      <div className="text-xs font-body text-white/40 uppercase tracking-widest mb-1">Escríbenos</div>
-                      <li><a href="mailto:equipo@veralyaconsulting.com" className="text-gray-400 hover:text-veralya-green transition-colors">equipo@veralyaconsulting.com</a></li>
-                    </div>
-                  </a>
-                  <a href="https://linkedin.com/company/veralya-consulting" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 p-6 bg-white/5 rounded-3xl border border-white/10 hover:border-veralya-green/50 transition-all duration-500">
-                    <div className="w-12 h-12 bg-veralya-green/20 rounded-full flex items-center justify-center">
-                      <Linkedin className="w-6 h-6 text-veralya-green" />
-                    </div>
-                    <div>
-                      <div className="text-xs font-body text-white/40 uppercase tracking-widest mb-1">Síguenos</div>
-                      <div className="text-xl font-display font-medium group-hover:text-veralya-green transition-colors">LinkedIn Veralya</div>
-                    </div>
-                  </a>
-                </div>
-              </div>
+                
+                <a href="mailto:equipo@veralyaconsulting.com" className="group flex items-center gap-6 p-8 bg-white/5 rounded-[2.5rem] border border-white/10 hover:border-veralya-green/50 transition-all duration-500 w-full max-w-lg mx-auto lg:mx-0">
+                  <div className="w-16 h-16 bg-veralya-green/20 rounded-full flex items-center justify-center">
+                    <Mail className="w-8 h-8 text-veralya-green" />
+                  </div>
+                  <div className="text-left">
+                    <div className="text-xs font-body text-white/40 uppercase tracking-widest mb-1">Escríbenos directamente</div>
+                    <div className="text-2xl font-display font-medium group-hover:text-veralya-green transition-colors">equipo@veralyaconsulting.com</div>
+                  </div>
+                </a>
 
-              <div className="reveal-section relative">
-                <div className="glass-dark p-12 rounded-[3rem] border border-white/10 shadow-3xl">
-                  <h4 className="font-display text-3xl font-bold mb-4">Veralya <span className="text-veralya-accent">Insights</span></h4>
-                  <p className="font-body text-white/50 mb-8 leading-relaxed">Suscríbete para recibir cápsulas de liderazgo estratégico y noticias sobre el sector directivo.</p>
-                  <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-                    <div className="relative">
-                      <input 
-                        type="email" 
-                        placeholder="Tu correo corporativo" 
-                        className="w-full px-8 py-5 bg-white/5 border border-white/10 rounded-full font-body text-white placeholder:text-white/20 focus:outline-none focus:border-veralya-green/50 transition-colors"
-                      />
-                      <button className="absolute right-2 top-2 bottom-2 px-8 bg-veralya-green hover:bg-veralya-emerald text-white font-display font-bold rounded-full transition-all active:scale-95">
-                        Unirme
-                      </button>
-                    </div>
-                    <div className="flex items-start gap-3 pl-4">
-                      <input type="checkbox" className="mt-1 accent-veralya-green" id="privacy" required />
-                      <label htmlFor="privacy" className="font-body text-[10px] text-white/30 leading-tight">Acepto la política de privacidad y el envío de comunicaciones comerciales.</label>
-                    </div>
-                  </form>
-                </div>
-                {/* Decorative TTI Shield */}
-                <div className="mt-12 flex justify-end">
-                   <img src={getAssetPath("tti-seal.jpg")} alt="TTI Success Insights Certified" className="h-24 opacity-40 hover:opacity-100 transition-opacity grayscale hover:grayscale-0" />
+                {/* Decorative TTI Shield positioned below contact */}
+                <div className="mt-16 opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+                   <img src={getAssetPath("tti-seal.jpg")} alt="TTI Success Insights Certified" className="h-28" />
                 </div>
               </div>
             </div>
@@ -1069,8 +1036,7 @@ function App() {
               </div>
             </div>
           </div>
-        </div>
-      </footer>
+        </footer>
     </div>
   );
 }
